@@ -1,0 +1,74 @@
+<nb-card class="default">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                CheckIn Management
+            </div>
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Mood Rat</th>
+                    <th scope="col">Stress</th>
+                    <th scope="col">Sleeping Quality</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Energy Level</th>
+                    <th scope="col">Daily Goal</th>
+                    <th scope="col">Physical Activity</th>
+                    <th scope="col">Gratitude</th>
+                    <th scope="col">copingMechanisms</th>
+                    <th scope="col">Date</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container
+                    *ngFor="let checkInHistoryObj of checkInHistory; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ checkInHistoryObj?.mood }}</td>
+                        <td>{{ checkInHistoryObj?.stress }}</td>
+                        <td>{{ checkInHistoryObj?.sleepQuality }}</td>
+                        <td>{{ checkInHistoryObj?.feelings }}</td>
+                        <td>{{ checkInHistoryObj?.energyLevel }}</td>
+                        <td>{{ checkInHistoryObj?.dailyGoal }}</td>
+                        <td>{{ checkInHistoryObj?.physicalActivity }}</td>
+                        <td>{{ checkInHistoryObj?.gratitude }}</td>
+                        <td>{{ checkInHistoryObj?.copingMechanisms }}</td>
+
+
+                        <td>{{ checkInHistoryObj?.createdAt | date: 'medium' }}</td>
+                      
+                        <!-- <td>
+                            <ng-container *ngIf="writeStatus">
+                                <a class="" [routerLink]="['edit/' + suppportTicketListObj?._id ]">
+                                    <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="!writeStatus">
+                                <a class="" [ngDisableLink]="true" style="opacity: 0.35;">
+                                    <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                                </a>
+                            </ng-container>
+                        </td> -->
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="checkInHistory.length == 0">
+                    <tr class="text-center">
+                        <td colspan="7">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

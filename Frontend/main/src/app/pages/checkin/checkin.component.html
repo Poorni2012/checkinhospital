@@ -1,0 +1,151 @@
+<div class="checkin-container">
+    <h2>Daily Mental Health Check-In</h2>
+    <form #checkin="ngForm" (ngSubmit)="submitForm(checkin)">
+        <!-- Mood Rating -->
+        <label for="mood">Mood Rating (1 to 10)</label>
+        <input 
+            type="range" 
+            id="mood" 
+            name="mood" 
+            min="1" 
+            max="10" 
+            step="1" 
+            [(ngModel)]="checkinForm.mood"
+            #mood="ngModel" 
+            required 
+        />
+        <p>Mood: {{ checkinForm.mood }}</p>
+        <div *ngIf="!mood.valid && mood.touched" class="error-message">
+            <div *ngIf="mood.errors?.required">Mood rating is required.</div>
+        </div>
+
+        <!-- Sleep Quality -->
+        <label for="sleepQuality">How was your sleep last night?</label>
+        <select 
+            id="sleepQuality" 
+            [(ngModel)]="checkinForm.sleepQuality" 
+            name="sleepQuality" 
+            #sleepQuality="ngModel" 
+            required
+        >
+            <option value="" disabled selected>Select an option</option>
+            <option value="1">Very Poor</option>
+            <option value="2">Poor</option>
+            <option value="3">Average</option>
+            <option value="4">Good</option>
+            <option value="5">Very Good</option>
+        </select>
+        <div *ngIf="!sleepQuality.valid && sleepQuality.touched" class="error-message">
+            <div *ngIf="sleepQuality.errors?.required">Sleep quality is required.</div>
+        </div>
+
+        <!-- Energy Level -->
+        <label for="energyLevel">Energy Level (1 to 10)</label>
+        <input 
+            type="range" 
+            id="energyLevel" 
+            name="energyLevel" 
+            min="1" 
+            max="10" 
+            [(ngModel)]="checkinForm.energyLevel" 
+            #energyLevel="ngModel"
+            required 
+        />
+        <p>Energy Level: {{ checkinForm.energyLevel }}</p>
+        <div *ngIf="!energyLevel.valid && energyLevel.touched" class="error-message">
+            <div *ngIf="energyLevel.errors?.required">Energy level is required.</div>
+        </div>
+
+        <!-- Physical Activity -->
+        <label for="physicalActivity">Have you exercised today?</label>
+        <select 
+            id="physicalActivity" 
+            [(ngModel)]="checkinForm.physicalActivity" 
+            name="physicalActivity" 
+            #physicalActivity="ngModel" 
+            required
+        >
+            <option value="" disabled selected>Select an option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        <div *ngIf="!physicalActivity.valid && physicalActivity.touched" class="error-message">
+            <div *ngIf="physicalActivity.errors?.required">Please select an option.</div>
+        </div>
+
+        <!-- Gratitude -->
+        <label for="gratitude">What are you grateful for today?</label>
+        <textarea 
+            id="gratitude" 
+            [(ngModel)]="checkinForm.gratitude" 
+            name="gratitude" 
+            rows="4"
+            required 
+            #gratitude="ngModel"
+        ></textarea>
+        <div *ngIf="!gratitude.valid && gratitude.touched" class="error-message">
+            <div *ngIf="gratitude.errors?.required">Please share what you're grateful for.</div>
+        </div>
+
+        <!-- Coping Mechanisms -->
+        <label for="copingMechanisms">What have you done to cope today?</label>
+        <textarea 
+            id="copingMechanisms" 
+            [(ngModel)]="checkinForm.copingMechanisms" 
+            name="copingMechanisms"
+            rows="4"
+            required
+            #copingMechanisms="ngModel"
+        ></textarea>
+        <div *ngIf="!copingMechanisms.valid && copingMechanisms.touched" class="error-message">
+            <div *ngIf="copingMechanisms.errors?.required">Please share your coping mechanisms.</div>
+        </div>
+
+        <!-- Stress -->
+        <label for="stress">Current Stress Level</label>
+        <input 
+            type="number" 
+            id="stress" 
+            [(ngModel)]="checkinForm.stress" 
+            name="stress" 
+            min="1" 
+            max="10" 
+            required
+            #stress="ngModel"
+        />
+        <div *ngIf="!stress.valid && stress.touched" class="error-message">
+            <div *ngIf="stress.errors?.required">Stress level is required.</div>
+        </div>
+
+        <!-- Feelings -->
+        <label for="feelings">Write About Your Feelings</label>
+        <textarea 
+            id="feelings" 
+            [(ngModel)]="checkinForm.feelings" 
+            name="feelings" 
+            rows="4" 
+            required 
+            #feelings="ngModel"
+        ></textarea>
+        <div *ngIf="!feelings.valid && feelings.touched" class="error-message">
+            <div *ngIf="feelings.errors?.required">Please share your feelings.</div>
+        </div>
+
+        <!-- Daily Goal -->
+        <label for="dailyGoal">Set a goal for today:</label>
+        <input 
+            type="text" 
+            id="dailyGoal" 
+            [(ngModel)]="checkinForm.dailyGoal" 
+            name="dailyGoal" 
+            required
+            #dailyGoal="ngModel"
+        />
+        <div *ngIf="!dailyGoal.valid && dailyGoal.touched" class="error-message">
+            <div *ngIf="dailyGoal.errors?.required">Daily goal is required.</div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+    </form>
+</div>

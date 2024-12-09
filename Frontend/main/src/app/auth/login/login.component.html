@@ -1,0 +1,87 @@
+<div class="align-items-center justify-content-center row vh-100">
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-header class="text-center">
+        <h3>Login</h3>
+      </nb-card-header>
+      <nb-card-body>
+        <form #form="ngForm" (ngSubmit)="submitLogin(form)" *ngIf="!isTFA">
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="label">Email address</label>
+            <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Email" [(ngModel)]="Email"
+              #email="ngModel" name="email" pattern="[a-z0-9.-_]{1,}@[a-z.-]{2,}[.]{1}[a-z]{2,}"
+              [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : email.touched ? 'danger' : onLogin ? 'danger' :'basic' "
+              required [attr.aria-invalid]="email.invalid && email.touched ? true : null">
+            <ng-container *ngIf="!email?.valid && (email.touched || email?.dirty || onLogin)">
+              <p class="caption status-danger pt-2" *ngIf="email.errors?.required">
+                Email is required!
+              </p>
+              <p class="caption status-danger pt-2" *ngIf="email.errors?.pattern">
+                Please enter valid Email (eg. xyz28@gmail.com)
+              </p>
+            </ng-container>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="label">Password</label>
+            <nb-form-field>
+              <input type="{{ showPassword ? 'password': 'text'}}" nbInput fullWidth id="exampleInputPassword1"
+                placeholder="Password" [(ngModel)]="password" #Password="ngModel" name="password"
+                [status]="Password.dirty ? (Password.invalid ? 'danger' : 'success') : Password.touched ? 'danger' : onLogin ? 'danger' :'basic' "
+                required [attr.aria-invalid]="Password.invalid && Password.touched ? true : null">
+              <button type="button" nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                <nb-icon [icon]="showPassword ?  'eye-off-outline' :'eye-outline'" pack="eva"
+                  [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                </nb-icon>
+              </button>
+            </nb-form-field>
+
+            <ng-container *ngIf="!Password?.valid && (Password.touched || Password?.dirty || onLogin)">
+              <p class="caption status-danger pt-2" *ngIf="Password.errors?.required">
+                Password is required!
+              </p>
+            </ng-container>
+
+          </div>
+          <div class="mb-4 pt-2">
+            <div id="patternContainer"
+              style="border-radius: 10px;background-image:linear-gradient(141deg, #0f4afc 0%, #2a5efd 51%, #3366ff 75%); margin: auto">
+            </div>
+            <input type="hidden" name="patterncode" id="patterncode">
+          </div>
+
+          <div class="d-flex">
+            <!-- <a [routerLink]="['/auth/forgot-pattern']" class="offset-6 text-decoration-none">Forgot Pattern</a> -->
+            <a [routerLink]="['/auth/register']" class="text-decoration-none">Register</a>
+          </div>
+          <div class="text-center pt-4">
+            <button class="col-md-8" type="submit" nbButton status="primary" [disabled]="onDisabled">Submit</button>
+
+          </div>
+
+        </form>
+
+        <form #otpForm="ngForm" (ngSubmit)="submitOTP(otpForm)" *ngIf="isTFA">
+          <div class="form-group">
+            <label for="otp" class="label">Enter TFA Code</label>
+            <input type="text" nbInput fullWidth id="otp" placeholder="TFA Code" [(ngModel)]="otp" #tfa_otp="ngModel"
+              name="tfa_otp" maxlength="6"
+              [status]="tfa_otp.dirty ? (tfa_otp.invalid ? 'danger' : 'success') : tfa_otp.touched ? 'danger' :onTFA? 'danger':'basic'"
+              [attr.aria-invalid]="tfa_otp.invalid && tfa_otp.touched ? true : null" pattern="^[0-9]*$" required>
+            <ng-container *ngIf="tfa_otp.invalid && (tfa_otp.touched || tfa_otp?.dirty || onTFA)">
+              <p class="caption status-danger pt-2" *ngIf="tfa_otp.errors?.required">
+                TFA is Required !!
+              </p>
+              <p class="caption status-danger pt-2" *ngIf="tfa_otp.errors?.pattern">
+                Numbers only
+              </p>
+            </ng-container>
+          </div>
+          <div class="text-center pt-3 pb-5">
+            <button nbButton class="col-md-9" type="submit" status="primary" [disabled]="TFAdisable">Submit</button>
+          </div>
+
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

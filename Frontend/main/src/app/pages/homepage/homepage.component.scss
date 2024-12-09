@@ -1,0 +1,59 @@
+.profile-image {
+    height: 110px;
+    width: 240px;
+}
+
+.upload-bg {
+    background: #f0f0f0;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload {
+    position: absolute;
+    visibility: hidden;
+}
+
+.file-upload-1 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: #f0f0f0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 15px 15px;
+    margin-bottom: 0;
+}
+
+.file-upload-1 .chos {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: #737373;
+}
+.file-upload-2 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: #f0f0f0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 15px 15px;
+    margin-bottom: 0;
+}
+
+.file-upload-2 .chos {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: #737373;
+}
+.lowercase{
+    text-transform: lowercase;
+}

@@ -1,0 +1,39 @@
+<div class="row d-flex">
+  <form #cmsAddForm="ngForm" (ngSubmit)="submitLogin(cmsAddForm)">
+    <div class="row">
+      <div class="col-md-12">
+        <nb-card class="defaultcss">
+          <nb-card-header>
+            <div class="d-flex">
+              <div class="">
+                Add IP
+              </div>
+              <div style="cursor: pointer;" class="ml-auto" [routerLink]="['/pages/authip/']">
+                <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                <span>Back</span>
+            </div>
+            </div>           
+          </nb-card-header>
+          <nb-card-body style="max-height: 200px; background-color: white;">
+            <div class="row">
+              <div class="col-md-12">
+                <label for="title" class="label">IP Address</label>
+                <input type="text" class="form-control" nbInput fullWidth id="ip" placeholder="IP Address"
+                  [(ngModel)]="ipAddress" #IPaddress="ngModel" name="ip"
+                  (keypress)="preventNonNumericalDotInputmin($event)" required>
+                <ng-container *ngIf="IPaddress.invalid && ( IPaddress.touched )">
+                  <p class="caption status-danger pt-2" *ngIf="IPaddress.errors?.required">
+                    IP Address is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <div class="text-center pt-3 pb-3">
+              <button class="col-md-2" type="submit" nbButton status="primary">Submit</button>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </form>
+</div>
