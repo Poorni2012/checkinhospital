@@ -1,0 +1,58 @@
+<nb-card class="defaultcss">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Email Template List
+            </div>
+            <!-- <div class="ml-auto" [routerLink]="['add']">
+                <nb-icon class="ml-4" icon="plus-outline" pack="eva"></nb-icon>
+                <span class="ml-2">Add Template</span>
+            </div> -->
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Status</th>
+                    <!-- <th scope="col">Date & Time</th> -->
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let emailTemplateListObj of emailTemplateList; let i = index">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ emailTemplateListObj?.title }}</td>
+                        <td>{{ emailTemplateListObj?.subject }}</td>
+                        <td class="font-weight-bold pt-3"
+                            [ngClass]="emailTemplateListObj.status ? 'caption status-success' : 'caption status-danger'">
+                            {{emailTemplateListObj.status ? 'Active' : 'InActive'}}</td>
+                        <!-- <td>{{ emailTemplateListObj?.created | date: 'medium' }}</td> -->
+                        <td>
+                            <a class="" [routerLink]="['edit/' + emailTemplateListObj?._id ]">
+                                <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                            </a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="emailTemplateList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="6">No Templates Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+
+
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

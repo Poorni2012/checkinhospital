@@ -1,0 +1,176 @@
+<nb-card>
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Currency management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getcurrencyOneList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getcurrencyOneList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="ml-auto" [routerLink]="['add']" style="cursor: pointer;">
+                <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+                <span class="ml-2">Add Currency </span>
+            </div> -->
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Currency</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Update Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let getCurrencyListObj of getCurrencyList; let i = index; trackBy: trackByCoinFn">
+                    <tr>
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{getCurrencyListObj?.type == crypto ? 'Coin' : 'Coin' | uppercase }}</td>
+                        <td>{{getCurrencyListObj?.currency_name | uppercase}}</td>
+                        <td>{{getCurrencyListObj?.currency_symbol | uppercase}}</td>
+                        <td class="font-weight-bold pt-3"
+                            [ngClass]="getCurrencyListObj.status ? 'caption status-success' : 'caption status-danger'">
+                            {{ getCurrencyListObj.status ? 'Active' : 'In-active' }}</td>
+                        <td style="cursor:pointer;">
+                            <div class="pl-3">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch_{{i}}"
+                                        [(ngModel)]="getCurrencyListObj.status"
+                                        (change)="updateStatus(getCurrencyListObj._id, getCurrencyListObj.status)">
+                                    <label class="custom-control-label" for="customSwitch_{{i}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="cursor:pointer;">
+                            <a class="" [routerLink]="['edit/' + getCurrencyListObj?._id ]">
+                                <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                            </a>
+                            <!-- <a class="col-6" [disabled]="getCurrencyListObj.isPairAvailable == true"
+                                (click)="openConfirmationDialog(getCurrencyListObj?._id, getCurrencyListObj.isPairAvailable)">
+                                <nb-icon icon="trash-outline" pack="eva" class="status-danger"></nb-icon>
+                            </a> -->
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="getCurrencyList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="7">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+
+        <div class="d-flex align-items-center justify-content-center" *ngIf="totalCoinItems > 0">
+            <ngb-pagination [collectionSize]="totalCoinItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+                [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+            </ngb-pagination>
+        </div>
+    </nb-card-body>
+
+</nb-card>
+
+
+<nb-card>
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Token management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchTokenValue" (keyup.enter)="getTokensList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getTokensList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                    <!-- <div class="md-form mt-0 col-auto" [routerLink]="['add']" style="cursor: pointer;">
+                        <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+                        <span class="ml-2">Add Token </span>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Network Type</th>
+                    <th scope="col">Currency</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Update Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let getTokenListObj of getTokenList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{getTokenListObj?.type == crypto ? 'Token' : 'Token' | uppercase }}</td>
+                        <td>{{getTokenListObj?.network_type | uppercase }}</td>
+                        <td>{{getTokenListObj?.currency_name | uppercase}}</td>
+                        <td>{{getTokenListObj?.currency_symbol | uppercase}}</td>
+                        <td class="font-weight-bold pt-3"
+                            [ngClass]="getTokenListObj.status ? 'caption status-success' : 'caption status-danger'">{{
+                            getTokenListObj.status ? 'Active' : 'In-active' }}</td>
+                        <td style="cursor:pointer;">
+                            <div class="pl-3">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch_{{i}}"
+                                        [(ngModel)]="getTokenListObj.status"
+                                        (change)="updateStatus(getTokenListObj._id, getTokenListObj.status)">
+                                    <label class="custom-control-label" for="customSwitch_{{i}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="cursor:pointer;">
+                            <a class="" [routerLink]="['edit/' + getTokenListObj?._id ]">
+                                <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                            </a>
+                            <!-- <a class="col-6" [disabled]="getTokenListObj.isPairAvailable == true"
+                                (click)="openConfirmationDialog(getTokenListObj?._id, getTokenListObj.isPairAvailable)">
+                                <nb-icon icon="trash-outline" pack="eva" class="status-danger"></nb-icon>
+                            </a> -->
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="getTokenList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="8">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+
+        <div class="d-flex align-items-center justify-content-center" *ngIf="totalItems > 0">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page1" [pageSize]="pageSize" [rotate]="true"
+                [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChangedevent()">
+            </ngb-pagination>
+        </div>
+    </nb-card-body>
+
+</nb-card>

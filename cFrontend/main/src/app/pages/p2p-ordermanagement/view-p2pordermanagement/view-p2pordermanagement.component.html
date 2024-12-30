@@ -1,0 +1,333 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <div class="d-flex">
+                    <div class="">
+                        View Order Details
+                    </div>
+                    <div class="ml-auto" (click)="goBack()">
+                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                        <span>Back</span>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <form #currencyEditForm="ngForm" *ngIf="Object.keys(orderDetails).length > 0">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="buy_usrId" class="label">Buyer Name</label>
+                                <input type="text" nbInput fullWidth placeholder="Buyer Name"
+                                    [(ngModel)]="orderDetails.buyer_user_details[0].username"
+                                    #buyer_user_details="ngModel" name="buyer_user_details" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="byr_feamt" class="label">Seller Name</label>
+                                <input type="text" nbInput fullWidth placeholder="Seller Name"
+                                    [(ngModel)]="orderDetails.seller_user_details[0].username"
+                                    #seller_user_details="ngModel" name="seller_user_details" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="pst_typ" class="label">Post Type</label>
+                                <input type="text" nbInput fullWidth id="pst_typ" placeholder="Post Type"
+                                    class="text-capitalize" [(ngModel)]="orderDetails.posttype" #posttype="ngModel"
+                                    name="posttype" readonly>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="odr_amt" class="label">Order Number</label>
+                                <input type="text" nbInput fullWidth id="odr_amt" placeholder="Order Number"
+                                    [(ngModel)]="orderDetails.order_no" #order_no="ngModel" name="order_no" readonly>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="pir" class="label">Pair</label>
+                                <input type="text" nbInput fullWidth id="pir" placeholder="Pair"
+                                    [(ngModel)]="orderDetails.pair" #pair="ngModel" name="pair" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <nb-form-field>
+                                    <label for="pay_amt" class="label">Pay Amount</label>
+                                    <input type="text" nbInput fullWidth id="pay_amt" placeholder="Pay Amount"
+                                        [(ngModel)]="orderDetails.pay_amount" #pay_amount="ngModel" name="pay_amount"
+                                        readonly>
+                                    <span class="mt-4 pr-3" nbSuffix>{{orderDetails?.pair.split('/')[1]}}</span>
+                                </nb-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <nb-form-field>
+                                    <label for="pay_amt" class="label">Receive Amount</label>
+                                    <input type="text" nbInput fullWidth id="pay_amt" placeholder="Receive Amount"
+                                        [(ngModel)]="orderDetails.receive_amount" #receive_amount="ngModel"
+                                        name="receive_amount" readonly>
+                                    <span class="mt-4 pr-3" nbSuffix>{{orderDetails?.pair.split('/')[0]}}</span>
+                                </nb-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="pay_amt" class="label">Buyer Fee Amount</label>
+                                <input type="text" nbInput fullWidth placeholder="Buyer Fee Amount"
+                                    [(ngModel)]="orderDetails.buyer_fee_amount" #buyer_fee_amount="ngModel"
+                                    name="buyer_fee_amount" readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="pay_amt" class="label">Seller Fee Amount</label>
+                                <input type="text" nbInput fullWidth placeholder="Seller Fee Amount"
+                                    [(ngModel)]="orderDetails.seller_fee_amount" #seller_fee_amount="ngModel"
+                                    name="seller_fee_amount" readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="pay_amt" class="label">Min Limit</label>
+                                <input type="text" nbInput fullWidth placeholder="Min Limit"
+                                    [(ngModel)]="orderDetails.min_limit" #min_limit="ngModel" name="min_limit" readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="pay_amt" class="label">Max Limit</label>
+                                <input type="text" nbInput fullWidth placeholder="Max Limit"
+                                    [(ngModel)]="orderDetails.max_limit" #max_limit="ngModel" name="max_limit" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="pay_mtd" class="label">Payment Method</label>
+                                <input type="text" nbInput fullWidth id="pay_mtd" placeholder="Payment Method"
+                                    [(ngModel)]="orderDetails.payment_method" #payment_method="ngModel"
+                                    name="payment_method" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="buy_odr_sts" class="label">Reference ID</label>
+                                <input type="text" nbInput fullWidth id="buy_odr_sts" placeholder="Reference ID"
+                                    [(ngModel)]="orderDetails.reference_message" #reference_message="ngModel"
+                                    name="reference_message" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="byr_sts" class="label">Buyer Status</label>
+                                <input type="text" nbInput fullWidth id="byr_sts" placeholder="Buyer Status"
+                                    class="text-capitalize" [(ngModel)]="orderDetails.buyer_status"
+                                    #buyer_status="ngModel" name="buyer_status" readonly>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="slr_sts" class="label">Seller Status</label>
+                                <input type="text" nbInput fullWidth id="slr_sts" placeholder="Seller Status"
+                                    class="text-capitalize" [(ngModel)]="orderDetails.seller_status"
+                                    #seller_status="ngModel" name="seller_status" readonly>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group"
+                        *ngIf="orderDetails?.seller_appeal?.admin_status == 'favour_to_seller' || orderDetails?.seller_appeal?.admin_status == 'favour_to_buyer' || orderDetails?.buyer_appeal?.admin_status == 'favour_to_seller' || orderDetails?.buyer_appeal?.admin_status == 'favour_to_buyer'">
+                        <div class="row mt-4">
+                            <div class="col-md-3">
+                                <label for="byr_sts" class="badge badge-info f-16">Dispute Status</label>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="byr_sts" class="text-capitalize badge badge-info f-16">{{
+                                    orderDetails?.seller_appeal?.admin_status == 'favour_to_buyer' ? 'Favour to Buyer'
+                                    : 'Favour to Seller' }}</label>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <label for="byr_sts" class="text-capitalize badge badge-info f-16">
+                                    {{
+                                        !orderDetails?.buyer_appeal || Object.keys(orderDetails?.buyer_appeal).length === 0
+                                            ? 'Favour to Buyer'
+                                            : orderDetails?.buyer_appeal?.admin_status == 'favour_to_buyer'
+                                                ? 'Favour to Buyer'
+                                                : 'Favour to Seller'
+                                    }}
+                                </label>
+                            </div> -->
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="mb-3 label" for="">Chat History</label>
+                                <div class="whitebgborderCard h-100 pt-3">
+                                    <div class="chartmaincontent">
+                                        <div class="joh-cha-card-total rounded p-3" malihu-scrollbar
+                                            [scrollbarOptions]="scrollbarOptions" id="chat_msg"
+                                            *ngIf="message_list.length > 0">
+                                            <ng-container *ngFor="let item of message_list">
+                                                <div class="messagecnt mb-3 label"
+                                                    [ngClass]="{'sender': (item?.user_type == user_type), 'received': (item?.user_type != user_type)}">
+                                                    <div class="d-flex"
+                                                        [ngClass]="{'flex-row-reverse': (item?.user_type == user_type)}">
+                                                        <div class="mc-text text-capitalize text-white mr-2 align-self-center"
+                                                            [ngClass]="{'text-right': (item?.user_type == user_type)}">
+                                                            <span class="badge badge-dark text-capitalize ml-2 pt-1"
+                                                                *ngIf="item?.user_id || item?.username">
+                                                                {{ item?.user_id ? item?.user_id?.username :
+                                                                item?.username }}
+                                                            </span>
+                                                            <span class="badge text-capitalize ml-2"
+                                                                [ngClass]="{'badge-danger': (item?.msg_user_type == 'buyer'), 'badge-success': (item?.msg_user_type == 'seller'), 'badge-info': (item?.msg_user_type != 'seller' && item?.msg_user_type != 'buyer') }">{{item?.msg_user_type
+                                                                ? item?.msg_user_type : item?.user_type}}</span>
+
+                                                        </div>
+                                                        <!-- <div class="mc-img mr-3">
+                                                            <img [src]="item?.user_id?.profile_picture"
+                                                                onerror="this.onerror=null;this.src='assets/images/uploadprofile.png';"
+                                                                class="w-40img">
+                                                        </div> -->
+                                                    </div>
+                                                    <div class="d-flex mt-2"
+                                                        *ngIf="item?.user_type != 'buyer_appeal' && item?.user_type != 'seller_appeal'"
+                                                        [ngClass]="{'flex-row-reverse': (item?.user_type == user_type)}">
+                                                        <div class="mc-text"
+                                                            [ngClass]="{'text-right mr-2': (item?.user_type == user_type)}">
+                                                            <span class="mr-2 ml-2"
+                                                                *ngIf="item?.message && item?.attachment == ''">{{item?.message}}</span>
+                                                            <span class="mr-2 ml-2"
+                                                                *ngIf="item?.message == '' && item?.attachment != ''">
+                                                                <img *ngIf="!item?.attachment?.includes('.pdf')"
+                                                                    [src]="_sanitizer.bypassSecurityTrustResourceUrl(item?.attachment)"
+                                                                    alt="" class="attachment-ms mw-150 mt-3"
+                                                                    (click)="showmodalImg(item?.attachment)">
+                                                                <span class="mt-3"
+                                                                    *ngIf="item?.attachment?.includes('.pdf')">
+                                                                    <a target="_blank" href="{{item?.attachment}}"
+                                                                        class="nav-hd text-decoration-none" download>
+                                                                        <span class="iconspan"><img
+                                                                                src="assets/images/buy.svg"></span>
+                                                                        <span class="menuName text-body ml-2">Download
+                                                                            PDF</span>
+                                                                    </a>
+                                                                </span>
+                                                            </span>
+                                                            <span class="f-4">
+                                                                {{item?.created_at | date: 'd/M/yy, h:mm a'}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex"
+                                                        *ngIf="item?.user_type == 'buyer_appeal' || item?.user_type == 'seller_appeal'"
+                                                        [ngClass]="{'flex-row-reverse': (item?.user_type == user_type)}">
+                                                        <div class="mc-text p-3"
+                                                            [ngClass]="{'text-right mr-2': (item?.user_type == user_type)}">
+                                                            <span class="mr-2 ml-2">
+                                                                <p class="f-15 mb-2 fw-500 text-lgrey"><b>Reason : </b>
+                                                                    {{
+                                                                    item?.reason }}
+                                                                </p>
+                                                                <p class="f-15 mb-2 fw-500 text-lgrey"><b>Phone No :
+                                                                    </b> {{
+                                                                    item?.phone }}
+                                                                </p>
+                                                                <p class="f-15 mb-2 fw-500 text-lgrey"><b>Description :
+                                                                    </b> {{
+                                                                    item?.description }}</p>
+                                                                <p class="f-15 mb-2 fw-500 text-lgrey"><b>Status : </b>
+                                                                    {{
+                                                                    item?.status }}
+                                                                </p>
+                                                                <p class="f-15 mb-2 fw-500 text-lgrey"><b>Admin Status :
+                                                                    </b> {{
+                                                                    item?.admin_status
+                                                                    != '' ? item?.admin_status : 'Pending' }}</p>
+                                                            </span>
+                                                            <span class="mr-2 ml-2" *ngIf="item?.proof_image != ''">
+                                                                <img *ngIf="!item?.proof_image?.includes('.pdf')"
+                                                                    [src]="_sanitizer.bypassSecurityTrustResourceUrl(item?.proof_image)"
+                                                                    alt="" class="attachment-ms mw-150 mt-3"
+                                                                    (click)="showmodalImg(item?.proof_image)">
+                                                                <span class="mt-3"
+                                                                    *ngIf="item?.proof_image?.includes('.pdf')">
+                                                                    <a target="_blank" href="{{item?.proof_image}}"
+                                                                        class="nav-hd text-decoration-none" download>
+                                                                        <span class="iconspan"><img
+                                                                                src="assets/images/buy.svg"></span>
+                                                                        <span class="menuName text-body ml-2">Download
+                                                                            PDF</span>
+                                                                    </a>
+                                                                </span>
+                                                            </span>
+                                                            <span class="f-4">
+                                                                {{item?.createdDate | date: 'd/M/yy, h:mm a'}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="joh-cha-card-total border rounded mt-4"
+                                            *ngIf="message_list.length == 0">
+                                            <div class="text-center content-cen">No Chat Found !!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group formInputs pt-5">
+                            <nb-form-field>
+                                <input class="form-control" type="text" nbInput fullWidth
+                                    placeholder="Please Enter Message" [(ngModel)]="message" name="p2p_message">
+                                <div nbSuffix>
+                                    <input class="uploadfile" type="file" id="imgupload"
+                                        (change)="onFileChange($event)">
+                                    <label for="imgupload" class="m-0">
+                                        <img src="../../../assets/images/picImg.svg">
+                                    </label>
+                                </div>
+                            </nb-form-field>
+                        </div>
+                        <div class="text-center pt-4">
+                            <button class="col-md-3 mr-4" type="button" nbButton status="primary"
+                                (click)="send_message()">Send Message</button>
+                           
+                            <button
+                                *ngIf="addUrl == '/pages/p2p-order-management/p2p-list-all-order/edit/'+activatedRoute.snapshot.paramMap.get('order_no') && orderDetails.buyer_status == 'inactive' && (orderDetails.seller_status == 'inactive' || orderDetails.seller_status == 'confirmed')"
+                                class="col-md-3 bg-red mr-4" type="button" nbButton status="danger"
+                                (click)="cancel_order()">Cancel Order</button>
+                            <ng-container
+                                *ngIf="( orderDetails?.buyer_appeal != null && orderDetails?.buyer_appeal != undefined && Object.keys(orderDetails?.buyer_appeal).length > 0 && orderDetails?.buyer_appeal?.status == 'pending') || (orderDetails?.seller_appeal != null && orderDetails?.seller_appeal != undefined && Object.keys(orderDetails?.seller_appeal).length > 0 && orderDetails?.seller_appeal?.status == 'pending')">
+                                <button class="col-md-3 mr-3 ml-4" type="button" nbButton status="danger"
+                                    (click)="openConfirmationDialog('buyer')">Favour to Buyer</button>
+                                <button class="col-md-3 mr-3 ml-4" type="button" nbButton status="success"
+                                    (click)="openConfirmationDialog('seller')">Favour to Seller</button>
+                            </ng-container>
+                        </div>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+
+<div id="myModal" class="modal">
+    <span (click)="closemodalImg()" class="close">&times;</span>
+    <img [src]="modalImg" class="modal-content1" id="img01" alt="">
+    <div id="caption"></div>
+</div>

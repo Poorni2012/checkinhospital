@@ -1,0 +1,266 @@
+<nb-card>
+    <nb-card-body>
+
+        <!-- <nb-tabset #staticTabs>
+                <nb-tab tabTitle="Personal Info"  (selectTab)="changeTab($event)" > -->
+        <nb-tabset>
+            <nb-tab tabTitle="Personal Info">
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <nb-card>
+                            <nb-card-header>
+                                <div class="d-flex">
+                                    <div class="">
+                                        View Users Personal Detail
+                                    </div>
+                                    <div class="ml-auto" [routerLink]="['/pages/p2p-usermanagement']">
+                                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                                        <span style="cursor: pointer;">Back</span>
+                                    </div>
+                                </div>
+                            </nb-card-header>
+                            <nb-card-body>
+                                <form #userEmailForm="ngForm" (ngSubmit)="UpdateUserEmail(userEmailForm)">
+                                    <!-- <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="fst_nam" class="label">First Name</label>
+                                                <input type="text" nbInput fullWidth id="fst_nam"
+                                                    placeholder="First Name" [(ngModel)]="userObj.first_name"
+                                                    #first_name="ngModel" name="first_name" readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="las_nam" class="label">Last Name</label>
+                                                <input type="text" nbInput fullWidth id="las_nam"
+                                                    placeholder="Last Name" [(ngModel)]="userObj.last_name"
+                                                    #last_name="ngModel" name="last_name" readonly>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="usr_nam" class="label">User ID</label>
+                                                <input type="text" nbInput fullWidth placeholder="User ID"
+                                                    [(ngModel)]="userObj.uid" #uid="ngModel" name="uid" readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="mil" class="label">Email</label>
+                                                <input type="text" nbInput fullWidth id="mil" placeholder="Email"
+                                                    [(ngModel)]="userObj.email" #email="ngModel" name="email" required>
+
+                                                <ng-container
+                                                    *ngIf="!email?.valid && (email.touched || email?.dirty || onSubmit)">
+                                                    <p class="caption status-danger pt-2"
+                                                        *ngIf="email.errors?.required">
+                                                        Email is required!
+                                                    </p>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="usr_nam" class="label">User Name</label>
+                                                <input type="text" nbInput fullWidth placeholder="User Name"
+                                                    [(ngModel)]="userObj.username" #username="ngModel" name="username"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="usr_id" class="label">Date Of Birth</label>
+                                                <input type="text" nbInput fullWidth placeholder="DOB"
+                                                    [(ngModel)]="userObj.dob" #dob="ngModel" name="dob" readonly>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="usr_id" class="label">Phone Number</label>
+                                                <input type="text" nbInput fullWidth placeholder="Phone Number"
+                                                    [(ngModel)]="userObj.phone" #phone="ngModel" name="phone" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="usr_nam" class="label">City</label>
+                                                <input type="text" nbInput fullWidth placeholder="City"
+                                                    [(ngModel)]="userObj.city" #city="ngModel" name="city" readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="usr_id" class="label">State</label>
+                                                <input type="text" nbInput fullWidth placeholder="State"
+                                                    [(ngModel)]="userObj.state" #state="ngModel" name="state" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="usr_nam" class="label">Country</label>
+                                                <input type="text" nbInput fullWidth placeholder="Country"
+                                                    [(ngModel)]="userObj.country" #country="ngModel" name="country"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="usr_id" class="label">Postal Code</label>
+                                                <input type="text" nbInput fullWidth placeholder="Postal Code"
+                                                    [(ngModel)]="userObj.postal_code" #postal_code="ngModel"
+                                                    name="postal_code" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="text-center">
+                                        <button class="col-md-4" type="submit" nbButton status="primary">Submit</button>
+                                    </div> -->
+                                </form>
+                            </nb-card-body>
+                        </nb-card>
+                    </div>
+                </div>
+            </nb-tab>
+
+            <nb-tab tabTitle="Security">
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <nb-card>
+                            <nb-card-header>
+                                <div class="d-flex">
+                                    <div class="">
+                                        View Users Security Details
+                                    </div>
+                                    <div class="ml-auto" [routerLink]="['/pages/p2p-usermanagement']">
+                                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                                        <span style="cursor: pointer;">Back</span>
+                                    </div>
+                                </div>
+                            </nb-card-header>
+                            <nb-card-body>
+                                <form #userViewForm="ngForm">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="tfa_sts" class="label">TFA Status</label>
+                                                <input type="text" nbInput fullWidth id="tfa_sts"
+                                                    placeholder="TFA Status" [(ngModel)]="userObj.randcode"
+                                                    #randcode="ngModel" name="randcode" readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="tfa_sts" class="label">Email Notification Alert</label>
+                                                <input type="text" nbInput fullWidth
+                                                    placeholder="Email Notification Status"
+                                                    [(ngModel)]="userObj.email_alert" #email_alert="ngModel"
+                                                    name="email_alert" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </nb-card-body>
+                        </nb-card>
+                    </div>
+                </div>
+            </nb-tab>
+
+            <!-- Tab for Export Transaction History -->
+            <nb-tab tabTitle="User Transactions">
+                <nb-card>
+                    <nb-card-header>
+                        <div class="d-flex">
+                            <div class="">P2P Transactions History</div>
+                            <div class="ml-auto">
+                                <button class="btn rounded-pill" [disabled]="dataCount?.length==0"
+                                    (click)="exportDepositHistory();">
+                                    <img src="../../../../assets/images/Document.svg" class="mr-2"> Export Transaction
+                                </button>
+                            </div>
+                        </div>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">S.No</th>
+                                    <th scope="col">User Id</th>
+                                    <th scope="col">Transaction Type</th>
+                                    <th scope="col">Assets</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Transaction Fees</th>
+                                    <th scope="col">DATETIME</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let userListObj of userList; let i = index">
+                                    <tr>
+                                        <th scope="row">{{ i+1 }}</th>
+                                        <td>{{ userListObj.user_id }}</td>
+                                        <td>{{ userListObj.TYPE }}</td>
+                                        <td>{{ userListObj.currency_symbol }}</td>
+                                        <td>{{ Number(userListObj.amount || 0).toFixed(8)}}</td>
+                                        <td>{{ Number(userListObj.transfer_fee || 0).toFixed(8)}}</td>
+                                        <td>{{ userListObj.DATETIME | date: 'medium'}}</td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="dataCount?.length == 0">
+                                    <tr class="text-center">
+                                        <td colspan="7">No Transactions History Found</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </nb-card-body>
+                    <div class="d-flex align-items-center justify-content-center" *ngIf="dataCount?.length != 0">
+                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize"
+                            [rotate]="true" [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+                        </ngb-pagination>
+                    </div>
+                </nb-card>
+            </nb-tab>
+
+            <nb-tab tabTitle="Audit Report">
+                <nb-card>
+                    <nb-card-header>
+                        <div class="d-flex">
+                            <div class="">P2P User Audit Report</div>
+                            <div class="ml-auto">
+                                <button class="btn rounded-pill" 
+                                    (click)="exportAuditReport();">
+                                    <img src="../../../../assets/images/Document.svg" class="mr-2"> Export Transaction
+                                </button>
+                            </div>
+                        </div>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">S.No</th>
+                                    <th scope="col">Currency</th>
+                                    <th scope="col">Total Deposit</th>
+                                    <th scope="col">Total Withdraw</th>
+                                    <th scope="col">P2P Total Buy</th>
+                                    <th scope="col">P2P Total Sell</th>
+                                    <th scope="col">Hold Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let userListObj of userAuditList; let i = index">
+                                    <tr>
+                                        <th scope="row">{{ i+1 }}</th>
+                                        <td>{{ userListObj.currency }}</td>
+                                        <td>{{ Number(userListObj.depositBalance || 0).toFixed(8)}}</td>
+                                        <td>{{ Number(userListObj.withdrawBalance || 0).toFixed(8)}}</td>
+                                        <td>{{ Number(userListObj.p2pBuyAmount || 0).toFixed(8)}}</td>
+                                        <td>{{ Number(userListObj.p2pSellAmount || 0).toFixed(8)}}</td>
+                                        <td>{{ Number(userListObj.holdP2P || 0).toFixed(8)}}</td>
+                                        <!-- <td>{{ Number(userListObj.depositAmount) - (Number(userListObj.p2pAmount) + Number(userListObj.withdrawAmount)) 
+                                            }}</td> -->
+
+                                    </tr>
+                                </ng-container>                               
+                            </tbody>
+                        </table>
+                    </nb-card-body>                   
+                </nb-card>
+            </nb-tab>
+        </nb-tabset>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <div class="d-flex">
+                    <div class="">
+                        Edit CMS
+                    </div>
+                    <div class="ml-auto" [routerLink]="['/pages/cms-management/']">
+                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                        <span class="ml-2">Back</span>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <form #cmsEditForm="ngForm" (ngSubmit)="editCmsDetails(cmsEditForm)">
+                    <div class="form-group">
+                        <label for="title" class="label">Title</label>
+                        <input type="text" nbInput fullWidth id="title" placeholder="Title" [(ngModel)]="cmsObj.title"
+                            #title="ngModel" name="title" readonly
+                            [status]="title.dirty ? (title.invalid  ? 'danger' : 'success') : title.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                            [attr.aria-invalid]="title.invalid && title.touched ? true : null" required>
+                        <ng-container *ngIf="title.invalid && ( title.touched || title.dirty ||  onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="title.errors?.required">
+                                Title is required!
+                            </p>
+                        </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1" class="label">Heading</label>
+                        <input type="text" nbInput fullWidth id="exampleInputPassword1" placeholder="Heading"
+                            [(ngModel)]="cmsObj.heading" #heading="ngModel" name="heading"
+                            [status]="heading.dirty ? (heading.invalid  ? 'danger' : 'success') : heading.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                            [attr.aria-invalid]="heading.invalid && heading.touched ? true : null" required>
+                        <ng-container *ngIf="heading.invalid && ( heading.touched || heading.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="heading.errors?.required">
+                                Heading is required!
+                            </p>
+                        </ng-container>
+                    </div>
+                    <div>
+                        <label for="exampleInputPassword1" class="label">Content</label>
+                        <ckeditor [config]="ckeConfig" [(ngModel)]="cmsObj.content"
+                            #content="ngModel" name="content" required></ckeditor>
+                        <ng-container *ngIf="content.invalid && ( content.touched || content.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="content.errors?.required">
+                                Content is required!
+                            </p>
+                        </ng-container>
+                    </div>
+                    <div class="text-center pt-4 pb-4">
+                        <button class="col-md-2" type="submit" nbButton status="primary" [disabled]="onDisabled">Submit</button>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

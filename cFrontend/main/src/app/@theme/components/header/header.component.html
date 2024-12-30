@@ -1,0 +1,45 @@
+<div class="header-container">
+  <div class="logo-container">
+    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+      <nb-icon icon="menu-2-outline"></nb-icon>
+    </a>
+    <nb-actions size="small">
+      <nb-action class="user-action" *nbIsGranted="['view', 'user']" (click)="redirect()">
+        <nb-user [onlyPicture]="userPictureOnly" [name]="siteSetting?.site_name" [picture]="siteSetting?.site_logo"
+          picture>
+        </nb-user>
+      </nb-action>
+    </nb-actions>
+  </div>
+</div>
+
+
+
+
+<div class="header-container">
+  <!-- <nb-actions size="large">  (click)="modifyNotificationCount();pageChanged()" -->
+  <!-- <nb-action class="control-item" icon="bell-outline" badgeText="{{totalCount}}" badgeStatus="danger"
+      badgePosition="top right">
+    </nb-action> -->
+
+  <!-- <nb-action class="control-item" style="cursor: pointer;" *ngIf="!isAdminWalletConnected"
+      (click)="connectAdminWallet('metamask')">Connect Wallet
+    </nb-action>
+
+    <nb-action class="control-item" style="cursor: pointer;" (click)="copyText()"
+      *ngIf="isAdminWalletConnected">{{walletData}}
+    </nb-action> -->
+  <nb-actions size="medium" *ngIf=" isSubAdmin=='false'">
+    <nb-action class=" control-item" icon="person-outline" nbTooltip="Settings" [nbContextMenu]='userMenu'
+      nbContextMenuTag="my-context-menu">
+    </nb-action>
+  </nb-actions>
+
+  <nb-actions size="medium" *ngIf="isSubAdmin=='true'">
+    <nb-action class="control-item" icon="person-outline" nbTooltip="Settings" [nbContextMenu]='subAdminMenu'
+      nbContextMenuTag="my-context-menu">
+    </nb-action>
+  </nb-actions>
+
+
+</div>

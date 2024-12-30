@@ -1,0 +1,47 @@
+<ng-container *ngIf="!isInput">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ title }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {{ message }}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="decline()">{{ btnCancelText }}</button>
+        <button type="button" class="btn btn-primary" (click)="accept()">{{ btnOkText }}</button>
+    </div>
+</ng-container>
+
+
+<ng-container *ngIf="isInput">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ title }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group">
+                <label for="tfaCode" class="label form-control-label">{{ showText == 'Reason' ? 'Reason for Reject' : 'Enter the OTP for Confirmation'}}</label>
+                <input type="text" id="tfaCode" nbInput fullWidth placeholder="Enter the {{showText}}" required
+                    [(ngModel)]="reason" #reason_value="ngModel" name="reason_value"
+                    autocomplete="off"
+                    [status]="reason_value.dirty ? (reason_value.invalid  ? 'danger' : 'success') : reason_value.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                    required [attr.aria-invalid]="reason_value.invalid && reason_value.touched ? true : null">
+                <ng-container
+                    *ngIf="!reason_value?.valid && (reason_value.touched || reason_value?.dirty || onSubmit)">
+                    <p class="caption status-danger pt-2" *ngIf="reason_value.errors?.required">
+                        {{ showText }} is required!
+                    </p>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="decline()">{{ btnCancelText }}</button>
+        <button type="button" class="btn btn-primary" (click)="accept()">{{ btnOkText }}</button>
+    </div>
+</ng-container>

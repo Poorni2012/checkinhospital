@@ -1,0 +1,60 @@
+    <div class="row pt-5 mt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+              <nb-card>
+                <nb-card-header>
+                    <div class="d-flex">
+                       <div class="">
+                                Add Payment Details
+                        </div>
+                        <div class="ml-auto" [routerLink]="['/pages/payment-management']">
+                            <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                            <span>Back</span>
+                        </div>
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <form #paymentAddForm="ngForm" (ngSubmit)="addpaymentDetails(paymentAddForm)">
+                        <div class="form-control-group">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <label for="pay_name" class="label">Payment Mode</label>
+                                    <input type="text" nbInput fullWidth id="pay_name" placeholder="Payment Mode"
+                                        [(ngModel)]="paymentObj.payment_name" #payment_name="ngModel" name="payment_name"
+                                        [status]="payment_name.dirty ? (payment_name.invalid  ? 'danger' : 'success') : payment_name.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                                        [attr.aria-invalid]="payment_name.invalid && payment_name.touched ? true : null" minlength="3"
+                                        required pattern="[a-zA-Z\s]*$">
+                                    <ng-container *ngIf="payment_name.invalid && ( payment_name.touched || payment_name.dirty || onSubmit)">
+                                        <p class="caption status-danger pt-2" *ngIf="payment_name.errors?.required">
+                                            Payment Mode is required!
+                                        </p>
+                                        <p class="caption status-danger pt-2" *ngIf="payment_name.errors?.minlength">
+                                            Minimum 3 characters required
+                                        </p>
+                                        <p class="caption status-danger pt-2" *ngIf="payment_name.errors?.pattern">
+                                            Alphabets only
+                                        </p>
+                                    </ng-container>
+      
+    
+                                </div>
+                                <div class="col-md-3"></div>
+    
+                                <div class="text-center pt-4 pb-4">
+                                    <button class="col-md-2" type="submit" nbButton status="primary"
+                                        [disabled]="onDisabled">Submit</button>
+                                </div>
+    
+                            </div>
+                        </div>
+    
+    
+                    </form>
+    
+    
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+    

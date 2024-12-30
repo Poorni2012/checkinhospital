@@ -1,0 +1,143 @@
+<nb-card>
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Payment Time Management
+            </div>
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <form #paymentTime="ngForm" (ngSubmit)="addPaymentTime(paymentTime)">
+            <div class="form-control-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="pay_name" class="label">Payment Before Start Time</label>
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth id="pay_name" placeholder="Payment Before Start Time"
+                                [(ngModel)]="paymentObj.p2p_payment_beforeTime" #p2p_payment_beforeTime="ngModel"
+                                name="p2p_payment_beforeTime"
+                                [status]="p2p_payment_beforeTime.dirty ? (p2p_payment_beforeTime.invalid  ? 'danger' : 'success') : p2p_payment_beforeTime.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                                [attr.aria-invalid]="p2p_payment_beforeTime.invalid && p2p_payment_beforeTime.touched ? true : null"
+                                required pattern="^(?!0*\.?0+$)+?(\d*|\d{1,3}(,\d{3})*)(\.\d{0,6})?\b$">
+                            <span class="pr-3" nbSuffix>Mins</span>
+                        </nb-form-field>
+                        <ng-container class="pt-2"
+                            *ngIf="p2p_payment_beforeTime.invalid && ( p2p_payment_beforeTime.touched || p2p_payment_beforeTime.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="p2p_payment_beforeTime.errors?.required">
+                                * Payment Before Start Time is required
+                            </p>
+                            <p class="caption status-danger pt-2" *ngIf="p2p_payment_beforeTime.errors?.pattern">
+                                * Invalid Time
+                            </p>
+                        </ng-container>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="pay_name" class="label">Payment After Start Time</label>
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth id="pay_name" placeholder="Payment After Start Time"
+                                [(ngModel)]="paymentObj.p2p_payment_afterTime" #p2p_payment_afterTime="ngModel"
+                                name="p2p_payment_afterTime"
+                                [status]="p2p_payment_afterTime.dirty ? (p2p_payment_afterTime.invalid  ? 'danger' : 'success') : p2p_payment_afterTime.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                                [attr.aria-invalid]="p2p_payment_afterTime.invalid && p2p_payment_afterTime.touched ? true : null"
+                                required pattern="^(?!0*\.?0+$)+?(\d*|\d{1,3}(,\d{3})*)(\.\d{0,6})?\b$">
+                            <span class="pr-3" nbSuffix>Mins</span>
+                        </nb-form-field>
+
+                        <ng-container class="pt-2"
+                            *ngIf="p2p_payment_afterTime.invalid && ( p2p_payment_afterTime.touched || p2p_payment_afterTime.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="p2p_payment_afterTime.errors?.required">
+                                * Payment After Start Time is required
+                            </p>
+                            <p class="caption status-danger pt-2" *ngIf="p2p_payment_afterTime.errors?.pattern">
+                                * Invalid Time
+                            </p>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="text-center pt-4 pb-4">
+                    <button class="col-md-2" type="submit" nbButton status="primary">Submit</button>
+                </div>
+            </div>
+
+
+        </form>
+    </nb-card-body>
+</nb-card>
+
+
+
+
+
+
+
+
+<nb-card class="default">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Payment Method Management
+            </div>
+            <div class="ml-auto" [routerLink]="['add']">
+                <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+                <span class="ml-2">Add Payment Details</span>
+            </div>
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Payment Mode</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let paymentListObj of paymentList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ paymentListObj?.payment_name }}</td>
+                        <td>{{ paymentListObj?.createdAt | date: 'medium' }}</td>
+                        <!-- <td>
+                            <nb-toggle [(ngModel)]="paymentListObj.status"
+                                (change)="updateStatus(paymentListObj._id, paymentListObj.status)"
+                                status="basic"></nb-toggle>
+                        </td> -->
+                        <td>
+                            <div class="pl-3">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch_{{i}}"
+                                        [(ngModel)]="paymentListObj.status"
+                                        (change)="updateStatus(paymentListObj._id, paymentListObj.status)">
+                                    <label class="custom-control-label" for="customSwitch_{{i}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <a class="" [routerLink]="['edit/' + paymentListObj?._id ]">
+                                <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                            </a>
+                            <a class="col-6" (click)="openConfirmationDialog(paymentListObj?._id)">
+                                <nb-icon icon="trash-outline" pack="eva" class="status-danger"></nb-icon>
+                            </a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="paymentList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="5">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="paymentList.length > 0">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

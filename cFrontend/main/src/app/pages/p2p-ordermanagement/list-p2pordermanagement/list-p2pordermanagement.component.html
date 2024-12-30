@@ -1,0 +1,687 @@
+<nb-card class="default" *ngIf="addUrl == '/pages/p2p-order-management/p2p-cancelorder'">
+    <nb-card-header>
+        <div class="d-flex">
+            <div>
+                Order Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getCloseOrderList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getCloseOrderList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Ordered Type</th>
+                    <th scope="col">Pair</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ordered Qty</th>
+                    <th scope="col">Buyer Fee</th>
+                    <th scope="col">Seller Fee</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let orderListObj of orderList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.posttype != 'Sell' ?
+                            orderListObj?.buyerEmail : orderListObj?.sellerEmail }}</td>
+                        <td class="font-weight-bold pt-3 caption text-uppercase"
+                            [ngClass]="orderListObj?.posttype == 'Buy' ? 'status-success' : 'status-danger'">{{
+                            orderListObj?.posttype }}</td>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.pair }}</td>
+                        <td>{{ orderListObj?.receive_amount }}</td>
+                        <td>{{ orderListObj?.pay_amount }}</td>
+                        <td>{{ orderListObj?.buyer_fee_amount }}</td>
+                        <td>{{ orderListObj?.seller_fee_amount }}</td>
+                        <td class="font-weight-bold pt-3 caption status-danger">Cancelled</td>
+                        <td>{{ orderListObj?.created_at }}</td>
+                        <td>
+                            <a class="" [routerLink]="['edit/' + orderListObj?.order_no ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="orderList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="11">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center"
+        *ngIf="addUrl == '/pages/p2p-order-management/p2p-cancelorder' && orderList.length > 0">
+        <ngb-pagination [collectionSize]="totalItemsClose" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="8" [boundaryLinks]="true" (pageChange)="pageChanged('closeOrders')">
+        </ngb-pagination>
+    </div>
+</nb-card>
+
+
+<nb-card class="default" *ngIf="addUrl == '/pages/p2p-order-management/p2p-completeorder'">
+    <nb-card-header>
+        <div class="d-flex">
+            <div>
+                Order Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getCompleteOrderList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getCompleteOrderList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Ordered Type</th>
+                    <th scope="col">Pair</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ordered Qty</th>
+                    <th scope="col">Buyer Fee</th>
+                    <th scope="col">Seller Fee</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let orderListObj of orderList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.posttype != 'Sell' ?
+                            orderListObj?.buyerEmail : orderListObj?.sellerEmail
+                            }}</td>
+                        <td class="font-weight-bold pt-3 caption text-uppercase"
+                            [ngClass]="orderListObj?.posttype == 'Buy' ? 'status-success' : 'status-danger'">{{
+                            orderListObj?.posttype }}</td>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.pair }}</td>
+                        <td>{{ orderListObj?.receive_amount }}</td>
+                        <td>{{ orderListObj?.pay_amount }}</td>
+                        <td>{{ orderListObj?.buyer_fee_amount }}</td>
+                        <td>{{ orderListObj?.seller_fee_amount }}</td>
+                        <td class="font-weight-bold pt-3 caption status-success">Completed</td>
+                        <td>{{ orderListObj?.created_at }}</td>
+                        <td>
+                            <a class="" [routerLink]="['edit/' + orderListObj?.order_no ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="orderList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="11">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+
+    <div class="d-flex align-items-center justify-content-center"
+        *ngIf="addUrl == '/pages/p2p-order-management/p2p-completeorder' && orderList.length > 0">
+        <ngb-pagination [collectionSize]="totalItemsComplete" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="8" [boundaryLinks]="true" (pageChange)="pageChanged('completeOrders')">
+        </ngb-pagination>
+    </div>
+</nb-card>
+
+
+
+
+<nb-card class="default" *ngIf="addUrl == '/pages/p2p-order-management/p2p-openorder'">
+    <nb-card-header>
+        <div class="d-flex">
+            <div>
+                Order Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getOpenOrderList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getOpenOrderList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email Id</th>
+                    <th scope="col">Ordered Type</th>
+                    <th scope="col">Pair</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ordered Qty</th>
+                    <th scope="col">Buyer Fee</th>
+                    <th scope="col">Seller Fee</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let orderListObj of orderList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.posttype != 'Sell' ?
+                            orderListObj?.buyerEmail : orderListObj?.sellerEmail
+                            }}</td>
+                        <td class="font-weight-bold pt-3 caption text-uppercase"
+                            [ngClass]="orderListObj?.posttype == 'Buy' ? 'status-success' : 'status-danger'">{{
+                            orderListObj?.posttype }}</td>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.pair }}</td>
+                        <td>{{ orderListObj?.receive_amount }}</td>
+                        <td>{{ orderListObj?.pay_amount }}</td>
+                        <td>{{ orderListObj?.buyer_fee_amount }}</td>
+                        <td>{{ orderListObj?.seller_fee_amount }}</td>
+                        <td class="font-weight-bold pt-3 caption status-primary">Inprogress</td>
+                        <td>{{ orderListObj?.created_at }}</td>
+                        <td>
+                            <a class="" [routerLink]="['edit/' + orderListObj?.order_no ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="orderList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="11">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center"
+        *ngIf="addUrl == '/pages/p2p-order-management/p2p-openorder' && orderList.length > 0">
+        <ngb-pagination [collectionSize]="totalItemsOpen" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="8" [boundaryLinks]="true" (pageChange)="pageChanged('openOrders')">
+        </ngb-pagination>
+    </div>
+</nb-card>
+
+
+
+<nb-card *ngIf="addUrl == '/pages/p2p-order-management/p2p-allorder'">
+    <nb-card-header>
+        <div class="d-flex">
+            <div>
+                Order Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getAllOrderList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getAllOrderList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email Id</th>
+                    <th scope="col">Ordered Type</th>
+                    <th scope="col">Pair</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ordered Qty</th>
+                    <th scope="col">Buyer Fee</th>
+                    <th scope="col">Seller Fee</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let orderListObj of orderList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.posttype != 'Sell' ?
+                            orderListObj?.buyerEmail : orderListObj?.sellerEmail
+                            }}</td>
+                        <td class="font-weight-bold pt-3 caption text-uppercase"
+                            [ngClass]="orderListObj?.posttype == 'Buy' ? 'status-success' : 'status-danger'">{{
+                            orderListObj?.posttype }}</td>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.pair }}</td>
+                        <td>{{ orderListObj?.receive_amount }}</td>
+                        <td>{{ orderListObj?.pay_amount }}</td>
+                        <td>{{ orderListObj?.buyer_fee_amount }}</td>
+                        <td>{{ orderListObj?.seller_fee_amount }}</td>
+                        <td>
+                            <span
+                                *ngIf="orderListObj?.buyer_status != 'completed' && orderListObj?.buyer_status != 'expired' && orderListObj?.buyer_status != 'cancelled' && orderListObj?.seller_status != 'completed' && orderListObj?.seller_status != 'expired' && orderListObj?.seller_status != 'cancelled'">
+                                <span class="font-weight-bold pt-3 caption status-primary">In Progress</span>
+                            </span>
+                            <span
+                                *ngIf="orderListObj?.buyer_status == 'completed' || orderListObj?.seller_status == 'completed' || orderListObj?.seller_status == 'released'">
+                                <span class="font-weight-bold pt-3 caption status-success">Completed</span>
+                            </span>
+                            <span
+                                *ngIf="orderListObj?.buyer_status == 'expired' || orderListObj?.buyer_status == 'cancelled' || orderListObj?.seller_status == 'expired' || orderListObj?.seller_status == 'cancelled'">
+                                <span class="font-weight-bold pt-3 caption status-danger">Cancelled</span>
+                            </span>
+                        </td>
+                        <td>{{ orderListObj?.created_at }}</td>
+                        <td>
+                            <a class="" [routerLink]="['edit/' + orderListObj?.order_no ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="orderList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="11">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center"
+        *ngIf="addUrl == '/pages/p2p-order-management/p2p-allorder' && orderList.length > 0">
+        <ngb-pagination [collectionSize]="totalItemsAll" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="9" [boundaryLinks]="true" (pageChange)="pageChanged('allOrders')">
+        </ngb-pagination>
+    </div>
+</nb-card>
+
+
+
+<nb-card class="default" *ngIf="addUrl == '/pages/p2p-order-management/p2p-disputeorder'">
+    <nb-card-header>
+        <div class="d-flex">
+            <div>
+                Order Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getDisputeOrderList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getDisputeOrderList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email Id</th>
+                    <th scope="col">Ordered Type</th>
+                    <th scope="col">Pair</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ordered Qty</th>
+                    <th scope="col">Buyer Fee</th>
+                    <th scope="col">Seller Fee</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let orderListObj of orderList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.buyer_status ==
+                            'disputed' ?
+                            orderListObj?.buyerEmail : orderListObj?.sellerEmail
+                            }}</td>
+                        <td class="font-weight-bold pt-3 caption text-uppercase"
+                            [ngClass]="orderListObj?.buyer_status === 'disputed' ? 'status-success' : 'status-danger'">
+                            {{ orderListObj?.buyer_status === 'disputed' ? 'Buy' : 'Sell' }}
+                        </td>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.pair }}</td>
+                        <td>{{ orderListObj?.receive_amount }}</td>
+                        <td>{{ orderListObj?.pay_amount }}</td>
+                        <td>{{ orderListObj?.buyer_fee_amount }}</td>
+                        <td>{{ orderListObj?.seller_fee_amount }}</td>
+                        <td class="font-weight-bold pt-3 caption status-info">Disputed</td>
+                        <td>{{ orderListObj?.created_at }}</td>
+                        <td>
+                            <a class="" [routerLink]="['edit/' + orderListObj?.order_no ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+
+                        </td>
+
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="orderList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="11">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center"
+        *ngIf="addUrl == '/pages/p2p-order-management/p2p-disputeorder' && orderList.length > 0">
+        <ngb-pagination [collectionSize]="totalItemsDispute" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="8" [boundaryLinks]="true" (pageChange)="pageChanged('disputeOrders')">
+        </ngb-pagination>
+    </div>
+
+</nb-card>
+
+
+<nb-card *ngIf="addUrl == '/pages/p2p-order-management/p2p-listallorder'">
+    <nb-card-header>
+        <div class="d-flex">
+            <div>
+                Order Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getAllOrderList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getAllOrderList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email Id</th>
+                    <th scope="col">Ordered Type</th>
+                    <th scope="col">Pair</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ordered Qty</th>
+                    <th scope="col">Buyer Fee</th>
+                    <th scope="col">Seller Fee</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let orderListObj of orderList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.posttype != 'Sell' ?
+                            orderListObj?.buyerEmail : orderListObj?.sellerEmail
+                            }}</td>
+                        <td class="font-weight-bold pt-3 caption text-uppercase"
+                            [ngClass]="orderListObj?.posttype == 'Buy' ? 'status-success' : 'status-danger'">{{
+                            orderListObj?.posttype }}</td>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.pair }}</td>
+                        <td>{{ orderListObj?.receive_amount }}</td>
+                        <td>{{ orderListObj?.pay_amount }}</td>
+                        <td>{{ orderListObj?.buyer_fee_amount }}</td>
+                        <td>{{ orderListObj?.seller_fee_amount }}</td>
+
+                        <td>{{ orderListObj?.created_at }}</td>
+                        <td>
+                            <a class="" [routerLink]="['edit/' + orderListObj?.order_no ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="orderList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="11">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center"
+        *ngIf="addUrl == '/pages/p2p-order-management/p2p-allorder' && orderList.length > 0">
+        <ngb-pagination [collectionSize]="totalItemsAll" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="9" [boundaryLinks]="true" (pageChange)="pageChanged('allOrders')">
+        </ngb-pagination>
+    </div>
+</nb-card>
+
+<nb-card class="default" *ngIf="addUrl == '/pages/p2p-order-management/p2p-disputelistorder'">
+    <nb-card-header>
+        <div class="d-flex">
+            <div>
+                Dispute Favour List Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getDisputeOrderList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getDisputeOrderList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email Id</th>
+                    <th scope="col">Ordered Type</th>
+                    <th scope="col">Pair</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ordered Qty</th>
+                    <th scope="col">Buyer Fee</th>
+                    <th scope="col">Seller Fee</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Favour</th>
+
+                    <th scope="col">Date & Time</th>
+                    <!-- <th scope="col">Action</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let orderListObj of orderList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.buyer_status ==
+                            'disputed' ?
+                            orderListObj?.buyerEmail : orderListObj?.sellerEmail
+                            }}</td>
+                        <td class="font-weight-bold pt-3 caption text-uppercase"
+                            [ngClass]="orderListObj?.buyer_status === 'disputed' ? 'status-success' : 'status-danger'">
+                            {{ orderListObj?.buyer_status === 'disputed' ? 'Buy' : 'Sell' }}
+                        </td>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.pair }}</td>
+                        <td>{{ orderListObj?.receive_amount }}</td>
+                        <td>{{ orderListObj?.pay_amount }}</td>
+                        <td>{{ orderListObj?.buyer_fee_amount }}</td>
+                        <td>{{ orderListObj?.seller_fee_amount }}</td>
+                        <td class="font-weight-bold pt-3 caption status-info">Disputed</td>
+                        <!-- <td [ngClass]="{
+                            'favour-to-seller': orderListObj?.isSellerDispute === 'favour_to_seller',
+                            'favour-to-buyer': orderListObj?.isSellerDispute !== 'favour_to_seller'
+                          }">
+                        {{ orderListObj?.isSellerDispute === 'favour_to_seller' ? 'Favour to Seller' : 'Favour to Buyer' }}
+                      </td> -->
+                      <td *ngIf="orderListObj?.isSellerDispute === 'InActive'" 
+                      [ngClass]="{
+                          'favour-buyer': orderListObj?.isBuyerDispute === 'favour_to_buyer', 
+                          'favour-seller': orderListObj?.isBuyerDispute !== 'favour_to_buyer'
+                      }">
+                      {{ orderListObj?.isBuyerDispute === 'favour_to_buyer' ? 'Favour to Buyer' : 'Favour to Seller' }}
+                  </td>
+                  
+                  <td *ngIf="orderListObj?.isBuyerDispute === 'InActive'" 
+                      [ngClass]="{
+                          'favour-seller': orderListObj?.isSellerDispute === 'favour_to_seller', 
+                          'favour-buyer': orderListObj?.isSellerDispute !== 'favour_to_seller'
+                      }">
+                      {{ orderListObj?.isSellerDispute === 'favour_to_seller' ? 'Favour to Seller' : 'Favour to Buyer' }}
+                  </td>
+                        <td>{{ orderListObj?.created_at }}</td>
+                        <!-- <td>
+                            <a class="" [routerLink]="['edit/' + orderListObj?.order_no ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+
+                        </td> -->
+
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="orderList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="11">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center"
+        *ngIf="addUrl == '/pages/p2p-order-management/p2p-disputeorder' && orderList.length > 0">
+        <ngb-pagination [collectionSize]="totalItemsDispute" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="8" [boundaryLinks]="true" (pageChange)="pageChanged('disputeOrders')">
+        </ngb-pagination>
+    </div>
+
+</nb-card>
+
+
+
+
+<nb-card *ngIf="addUrl == '/pages/p2p-order-management/p2p-list-all-order'">
+    <nb-card-header>
+        <div class="d-flex">
+            <div>
+                Order Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getAllOrderList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getAllOrderList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email Id</th>
+                    <th scope="col">Ordered Type</th>
+                    <th scope="col">Pair</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ordered Qty</th>
+                    <th scope="col">Buyer Fee</th>
+                    <th scope="col">Seller Fee</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let orderListObj of orderList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.posttype != 'Sell' ?
+                            orderListObj?.buyerEmail : orderListObj?.sellerEmail
+                            }}</td>
+                        <td class="font-weight-bold pt-3 caption text-uppercase"
+                            [ngClass]="orderListObj?.posttype == 'Buy' ? 'status-success' : 'status-danger'">{{
+                            orderListObj?.posttype }}</td>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ orderListObj?.pair }}</td>
+                        <td>{{ orderListObj?.receive_amount }}</td>
+                        <td>{{ orderListObj?.pay_amount }}</td>
+                        <td>{{ orderListObj?.buyer_fee_amount }}</td>
+                        <td>{{ orderListObj?.seller_fee_amount }}</td>
+                        <td>
+                            <span
+                                *ngIf="orderListObj?.buyer_status != 'completed' && orderListObj?.buyer_status != 'expired' && orderListObj?.buyer_status != 'cancelled' && orderListObj?.seller_status != 'completed' && orderListObj?.seller_status != 'expired' && orderListObj?.seller_status != 'cancelled'">
+                                <span class="font-weight-bold pt-3 caption status-primary">In Progress</span>
+                            </span>
+                            <span
+                                *ngIf="orderListObj?.buyer_status == 'completed' || orderListObj?.seller_status == 'completed' || orderListObj?.seller_status == 'released'">
+                                <span class="font-weight-bold pt-3 caption status-success">Completed</span>
+                            </span>
+                            <span
+                                *ngIf="orderListObj?.buyer_status == 'expired' || orderListObj?.buyer_status == 'cancelled' || orderListObj?.seller_status == 'expired' || orderListObj?.seller_status == 'cancelled'">
+                                <span class="font-weight-bold pt-3 caption status-danger">Cancelled</span>
+                            </span>
+                        </td>
+                        <td>{{ orderListObj?.created_at }}</td>
+                        <td>
+                            <a class="" [routerLink]="['edit/' + orderListObj?.order_no ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="orderList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="11">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center"
+        *ngIf="addUrl == '/pages/p2p-order-management/p2p-list-all-order' && orderList.length > 0">
+        <ngb-pagination [collectionSize]="totalItemsAll" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="9" [boundaryLinks]="true" (pageChange)="pageChanged('allOrders')">
+        </ngb-pagination>
+    </div>
+</nb-card>

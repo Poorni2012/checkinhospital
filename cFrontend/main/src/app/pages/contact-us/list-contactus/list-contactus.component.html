@@ -1,0 +1,60 @@
+<nb-card class="defaultcss">
+    <nb-card-header>
+        Contact Us User List
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let contactUsListObj of contactUsList; let i = index">
+                    <tr>
+                        <th scope="row">{{ (i+1) + ((page - 1) * 10) }}</th>
+                        <td>{{ contactUsListObj?.username }}</td>
+                        <td>{{ contactUsListObj?.email }}</td>
+                        <td>{{ contactUsListObj?.subject }}</td>
+                        <td>{{ contactUsListObj?.message }}</td>
+                        <td class="font-weight-bold pt-3 caption"
+                            [ngClass]="contactUsListObj?.status == 'Posted' ? 'status-success' : 'status-danger'">
+                            {{ contactUsListObj?.status }}
+                        </td>
+                        <td>{{ contactUsListObj?.created_on | date: 'medium' }}</td>
+                        <td>
+                            <ng-container *ngIf="writeStatus">
+                                <a class="" [routerLink]="['edit/' + contactUsListObj?._id ]">
+                                    <nb-icon icon="corner-up-right-outline" pack="eva" class="status-primary"></nb-icon>
+                                </a>
+                            </ng-container>
+
+                            <ng-container *ngIf="!writeStatus">
+                                <a class="" [ngDisableLink]="true" style="opacity: 0.35;">
+                                    <nb-icon icon="corner-up-right-outline" pack="eva" class="status-primary"></nb-icon>
+                                </a>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="contactUsList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="7">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="contactUsList.length > 0">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

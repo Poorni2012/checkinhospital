@@ -1,0 +1,23 @@
+<nb-layout windowMode>
+  <nb-layout-column>
+    <div class="align-items-center justify-content-center row vh-100">
+      <div class="col-md-12">
+        <nb-card class="vh-100">
+          <nb-card-body>
+            <div class="flex-centered col-xl-4 col-lg-6 col-md-8 col-sm-12">
+              <div class="text-center pb-4">
+                <img src="../../../assets/images/logo.png">
+              </div>
+              <h2 class="title">404 Page Not Found</h2>
+              <small class="sub-title">The page you were looking for doesn't exist</small>
+              <button nbButton fullWidth type="button" class="home-button" status="primary"
+                [routerLink]="['/auth/login']">
+                Take me back to Login
+              </button>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </nb-layout-column>
+</nb-layout>

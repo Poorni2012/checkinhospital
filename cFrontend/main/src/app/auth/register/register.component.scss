@@ -1,0 +1,26 @@
+
+::ng-deep #patternContainer {
+    background: white;
+    border-radius: 6px;
+    margin: auto;
+    box-shadow: 3px 5px 9px #9c9c9cc7;
+    .patt-dots {
+      background: white;
+    }
+  
+    .patt-circ.hovered {
+      border-color: white !important;
+    }
+  
+    .patt-lines {
+      background: rgba(235, 242, 242, 1);
+    }
+  }
+  
+  .pwdWidth{
+    width: 100px;
+  }
+  
+  nb-card-header {
+    background-color: #ffffff !important;
+  }

@@ -1,0 +1,154 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <div class="d-flex">
+                    <div class="">
+                        View Withdraw Details
+                    </div>
+                    <div class="ml-auto" [routerLink]="['/pages/p2p-withdrawHistory']">
+                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                        <span>Back</span>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <form #kycForm="ngForm" *ngIf="Object.keys(withdrawDetails).length > 0">
+                    <div class="pt-3">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="label f-16 mb-2">User Withdraw Status : <span
+                                    [ngClass]="{'text-danger': withdrawDetails?.user_status != 'Completed', 'text-success': withdrawDetails?.user_status == 'Completed'}">
+                                    {{ withdrawDetails?.user_status }}</span>
+                            </div>
+
+                            <div class="label f-16 mb-2">Admin Withdraw Status : <span
+                                    [ngClass]="{'text-danger': withdrawDetails?.STATUS != 'Completed', 'text-success': withdrawDetails?.STATUS == 'Completed'}">
+                                    {{ withdrawDetails?.STATUS }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="usr_nam" class="label">User ID</label>
+                                <input type="text" nbInput fullWidth placeholder="User ID"
+                                    [(ngModel)]="withdrawDetails.uid" #uid="ngModel" name="uid" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="mil" class="label">Email</label>
+                                <input type="text" nbInput fullWidth id="mil" placeholder="Email"
+                                    [(ngModel)]="withdrawDetails.email" #email="ngModel" name="email" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="usr_nam" class="label">User Name</label>
+                                <input type="text" nbInput fullWidth placeholder="User Name"
+                                    [(ngModel)]="withdrawDetails.username" #username="ngModel" name="username" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="usr_id" class="label">Currency Name</label>
+                                <input type="text" nbInput fullWidth placeholder="Currency Name"
+                                    [(ngModel)]="withdrawDetails.currency_name" #currency_name="ngModel"
+                                    name="currency_name" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="usr_id" class="label">Currency Symbol</label>
+                                <input type="text" nbInput fullWidth placeholder="Currency Symbol"
+                                    [(ngModel)]="withdrawDetails.currency_symbol" #currency_symbol="ngModel"
+                                    name="currency_symbol" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="usr_nam" class="label">Requested Amount</label>
+                                <nb-form-field>
+                                    <input type="text" nbInput fullWidth placeholder="Requested Amount"
+                                        [(ngModel)]="withdrawDetails.amount" #amount="ngModel" name="amount" readonly>
+                                    <span class="pr-3" nbSuffix>{{withdrawDetails?.currency_symbol}}</span>
+                                </nb-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="usr_id" class="label">Transfer Fee</label>
+                                <nb-form-field>
+                                    <input type="text" nbInput fullWidth placeholder="Transfer Fee"
+                                        [(ngModel)]="withdrawDetails.transfer_fee" #transfer_fee="ngModel"
+                                        name="transfer_fee" readonly>
+                                    <span class="pr-3" nbSuffix>{{withdrawDetails?.currency_symbol}}</span>
+                                </nb-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="usr_id" class="label">Transfer Amount</label>
+                                <nb-form-field>
+                                    <input type="text" nbInput fullWidth placeholder="Transfer Amount"
+                                        [(ngModel)]="withdrawDetails.transfer_amount" #transfer_amount="ngModel"
+                                        name="transfer_amount" readonly>
+                                    <span class="pr-3" nbSuffix>{{withdrawDetails?.currency_symbol}}</span>
+                                </nb-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="usr_nam" class="label">Unique Reference ID</label>
+                                <input type="text" nbInput fullWidth placeholder="Unique ID"
+                                    [(ngModel)]="withdrawDetails._id" #_id="ngModel" name="_id" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="usr_id" class="label">User Mobile Number</label>
+                                <input type="text" nbInput fullWidth placeholder="User Mobile"
+                                    [(ngModel)]="withdrawDetails.phone" #phone="ngModel" name="phone" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="usr_id" class="label">Requested On</label>
+                                <input type="text" nbInput fullWidth placeholder="Requested Date"
+                                    [(ngModel)]="withdrawDetails.DATETIME" #DATETIME="ngModel" name="DATETIME" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="usr_nam" class="label">Description</label>
+                                <textarea type="text" nbInput fullWidth placeholder="Description" rows="5"
+                                    [(ngModel)]="withdrawDetails.description" #description="ngModel" name="description"
+                                    readonly>
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" *ngIf="withdrawDetails?.STATUS != 'Pending'">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="usr_nam" class="label">Transaction Hash</label>
+                                <input type="text" nbInput fullWidth placeholder="Transaction Hash"
+                                    [(ngModel)]="withdrawDetails.wallet_txid" #wallet_txid="ngModel" name="wallet_txid"
+                                    readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center pt-4 pb-4" *ngIf="withdrawDetails?.STATUS == 'Pending'">
+                        <button nbButton class="col-md-2" type="button" status="success" [disabled]="isDisable"
+                            (click)="requestForOTP()">
+                            Confirm
+                        </button>
+                        <button nbButton class="col-md-2 ml-5" type="button" status="danger"
+                            (click)="openConfirmationDialogForReject('cancel')">
+                            Reject
+                        </button>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

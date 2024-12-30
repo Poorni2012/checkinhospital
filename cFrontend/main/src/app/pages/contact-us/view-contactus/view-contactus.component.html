@@ -1,0 +1,81 @@
+<nb-card>
+    <nb-card-body>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <nb-card>
+                    <nb-card-header>
+                        <div class="d-flex">
+                            <div class="">
+                                View Contact Us User Details
+                            </div>
+                            <div class="ml-auto" [routerLink]="['/pages/contactus']">
+                                <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                                <span style="cursor: pointer;">Back</span>
+                            </div>
+                        </div>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <form #userViewForm="ngForm">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="usr_nam" class="label">User Name</label>
+                                        <input type="text" nbInput fullWidth placeholder="User Name"
+                                            [(ngModel)]="userObj.username" #username="ngModel" name="username" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="mil" class="label">Email</label>
+                                        <input type="text" nbInput fullWidth id="mil" placeholder="Email"
+                                            [(ngModel)]="userObj.email" #email="ngModel" name="email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="usr_id" class="label">Subject</label>
+                                        <input type="text" nbInput fullWidth placeholder="Description"
+                                            [(ngModel)]="userObj.subject" #subject="ngModel" name="subject" readonly>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="usr_id" class="label">Phone Number</label>
+                                        <input type="text" nbInput fullWidth placeholder="Phone Number"
+                                            [(ngModel)]="userObj.phone" #phoneNumber="ngModel" name="phoneNumber"
+                                            readonly>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="usr_id" class="label">Status</label>
+                                        <input type="text" nbInput fullWidth placeholder="Status"
+                                            [(ngModel)]="userObj.status" #status="ngModel" name="status" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="usr_id" class="label">Message</label>
+                                        <textarea type="text" rows="5" nbInput fullWidth placeholder="Status"
+                                            [(ngModel)]="userObj.message" #message="ngModel" name="message" readonly>
+                                            </textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="usr_id" class="label">Admin Reply</label>
+                                        <textarea type="text" rows="5" nbInput fullWidth placeholder="Admin Reply"
+                                            [readonly]="userObj?.status != 'Posted'" [(ngModel)]="userObj.admin_reply"
+                                            #admin_reply="ngModel" name="admin_reply">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center pt-4 pb-4" *ngIf="userObj?.status == 'Posted'">
+                                <button class="col-md-2" type="submit" nbButton status="primary"
+                                    [disabled]="!userObj.admin_reply" (click)="adminReply()">Submit</button>
+                            </div>
+                        </form>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

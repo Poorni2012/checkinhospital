@@ -1,0 +1,70 @@
+<nb-card class="defaultcss">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                CMS Management
+            </div>
+            <!-- <div class="ml-auto" [routerLink]="['add']">
+                <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+                <span class="ml-2">Add CMS</span>
+            </div> -->
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Update Status</th>
+                    <!-- <th scope="col">Date & Time</th> -->
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let cmsListObj of cmsList; let i = index">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ cmsListObj?.title }}</td>
+                        <td>{{ cmsListObj?.heading }}</td>
+                        <td class="font-weight-bold pt-3"
+                            [ngClass]="cmsListObj.status ? 'caption status-success' : 'caption status-danger'">
+                            {{cmsListObj.status ? 'Active' : 'InActive'}}</td>
+                        <td style="cursor:pointer;">
+                            <div class="pl-3">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch_{{i}}"
+                                        [(ngModel)]="cmsListObj.status"
+                                        (change)="updateStatus(cmsListObj._id, cmsListObj.status)">
+                                    <label class="custom-control-label" for="customSwitch_{{i}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- <td>{{ cmsListObj?.created | date: 'medium' }}</td> -->
+                        <td>
+                            <a class="" [routerLink]="['edit/' + cmsListObj?._id ]">
+                                <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                            </a>
+                            <!-- <a class="col-6" (click)="openConfirmationDialog(cmsListObj?._id)">
+                                <nb-icon icon="trash-outline" pack="eva" class="status-danger"></nb-icon>
+                            </a> -->
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="cmsList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="7">No CMS List Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

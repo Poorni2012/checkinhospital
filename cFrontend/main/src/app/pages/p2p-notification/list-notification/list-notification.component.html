@@ -1,0 +1,60 @@
+<nb-card class="default">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Notification List
+            </div>
+            <!-- <div class="ml-auto" [routerLink]="['add']">
+                <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+                <span class="ml-2">Add Currency</span>
+            </div> -->
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date and Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let userListObj of userList; let i = index">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ userListObj?.userName }}</td>
+                        <td>{{ userListObj?.description }}</td>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ userListObj?.type }}</td>
+                        <td>{{ userListObj?.status }}</td>
+                        <td>{{ userListObj?.created_at | date: 'medium'}}</td>
+                        <td>
+                            <a class="" routerLink="/pages/p2p-order-management/p2p-allorder"
+                                *ngIf="userListObj?.type == 'P2P'">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon>
+                            </a>
+                            <a class="" [routerLink]="userListObj?.view_orders" *ngIf="userListObj?.type != 'P2P'">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon>
+                            </a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="userList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="7">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

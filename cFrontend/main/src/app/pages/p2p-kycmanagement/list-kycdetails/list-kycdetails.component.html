@@ -1,0 +1,59 @@
+<nb-card class="defaultcss">
+    <nb-card-header>
+        KYC Management
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" rowspan="2" class="align-middle text-center">S.No</th>
+                    <th scope="col" rowspan="2" class="align-middle text-center">User Name</th>
+                    <th scope="col" rowspan="2" class="align-middle text-center">User Id</th>
+                    <th scope="col" rowspan="2" class="align-middle text-center">Email</th>
+                    <th scope="col" colspan="3" class="align-middle text-center border-bottom-0">KYC Status</th>
+                    <th scope="col" rowspan="2" class="align-middle text-center">Action</th>
+                </tr>
+                <tr class="border-top-0">
+                    <th scope="col" class="align-middle text-center">Front</th>
+                    <th scope="col" class="align-middle text-center">Back</th>
+                    <th scope="col" class="align-middle text-center">Selfie</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let userListObj of userList; let i = index">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ userListObj?.username }}</td>
+                        <td>{{ userListObj?.uid }}</td>
+                        <td>{{ userListObj?.mail }}</td>
+                        <td class="font-weight-bold pt-3 caption text-center"
+                            [ngClass]="{'status-danger': (userListObj?.kyc_front_status != 'Approved'), 'status-success': (userListObj?.kyc_front_status == 'Approved') }">
+                            {{ userListObj?.kyc_front_status }}</td>
+                        <td class="font-weight-bold pt-3 caption text-center"
+                            [ngClass]="{'status-danger': (userListObj?.kyc_back_status != 'Approved'), 'status-success': (userListObj?.kyc_back_status == 'Approved') }">
+                            {{ userListObj?.kyc_back_status }}</td>
+                        <td class="font-weight-bold pt-3 caption text-center"
+                            [ngClass]="{'status-danger': (userListObj?.kyc_selfie_status != 'Approved'), 'status-success': (userListObj?.kyc_selfie_status == 'Approved') }">
+                            {{ userListObj?.kyc_selfie_status }}</td>
+                        <td class="text-center">
+                            <a class="" [routerLink]="['edit/' + userListObj?._id ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+                        </td>
+
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="userList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="8">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="userList.length > 0">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

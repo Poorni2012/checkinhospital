@@ -1,0 +1,67 @@
+<div class="align-items-center justify-content-center row vh-100">
+    <div [ngClass]="{'col-md-5': !isResetPattern, 'col-md-8': isResetPattern }">
+        <nb-card>
+            <nb-card-header class="text-center">
+                <h3>Forgot Pattern</h3>
+            </nb-card-header>
+            <nb-card-body>
+                <form #forgotPatternForm="ngForm" (ngSubmit)="sendForgotPattern(forgotPatternForm)"
+                    *ngIf="!isResetPattern">
+                    <div class="form-group">
+                        <label class="label" for="input-email">Email address</label>
+                        <input nbInput fullWidth [(ngModel)]="Email" #email="ngModel" id="input-email" name="email"
+                            pattern="[a-z0-9.-_]{1,}@[a-z.-]{2,}[.]{1}[a-z]{2,}" placeholder="Email address" autofocus
+                            [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : email.touched ? 'danger' : onSubmit ? 'danger' :'basic'"
+                            required>
+
+                        <ng-container *ngIf="!email?.valid && (email.touched || email?.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="email.errors?.required">
+                                Email is required!
+                            </p>
+                            <p class="caption status-danger pt-2" *ngIf="email.errors?.pattern">
+                                Please enter valid Email Address
+                            </p>
+                        </ng-container>
+                    </div>
+
+                    <div class="text-center pt-4 pb-2">
+                        <button nbButton class="col-md-5" [disabled]="onDisabled" type="submit" status="primary">
+                            Send Mail Request
+                        </button>
+                    </div>
+                    <div class="text-center pt-3 pb-3">
+                        <a [routerLink]="['/auth/login']" class="text-decoration-none">Back To Login</a>
+                    </div>
+                </form>
+
+                <form #resetPatternForm="ngForm" (ngSubmit)="resetPattern(resetPatternForm)" *ngIf="isResetPattern">
+                    <div class="row">
+                        <div class="col-md-6 mb-4 pt-2">
+                            <label class="label pl-4 pb-2" for="input-email">New Pattern</label>
+                            <div id="newPatternContainer"
+                                style="border-radius: 10px;background-image:linear-gradient(141deg, #0f4afc 0%, #2a5efd 51%, #3366ff 75%); margin: auto">
+                            </div>
+                            <input type="hidden" name="newPatternCode" id="newPatternCode">
+                        </div>
+                        <div class="col-md-6 mb-4 pt-2">
+                            <label class="label pl-4 pb-2" for="input-email">Confirm Pattern</label>
+                            <div id="confirmPatternContainer"
+                                style="border-radius: 10px;background-image:linear-gradient(141deg, #0f4afc 0%, #2a5efd 51%, #3366ff 75%); margin: auto">
+                            </div>
+                            <input type="hidden" name="confirmPatternCode" id="confirmPatternCode">
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-3 pb-2">
+                        <button nbButton class="col-md-4" [disabled]="onDisabled" type="submit" status="primary">
+                            Submit
+                        </button>
+                    </div>
+                    <div class="text-center pt-3 pb-3">
+                        <a [routerLink]="['/auth/login']" class="text-decoration-none">Back To Login</a>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<nb-card class="default">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                User Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getUserList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getUserList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">User Id</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Verification Status</th>
+                    <th scope="col">User Status</th>
+                    <th scope="col">2FA Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let userListObj of userList; let i = index ">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ userListObj.username }}</td>
+                        <td>{{ userListObj.uid }}</td>
+                        <td>{{ userListObj.mail }}</td>
+                        <td class="font-weight-bold pt-3 caption"
+                            [ngClass]="userListObj?.verified ? 'status-success' : 'status-danger'">
+                            {{ userListObj?.verified ? 'Verified' : 'Un Verified'}}
+                        </td>
+                        <td>
+                            <div class="pl-3">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch1_{{i}}"
+                                        [(ngModel)]="!userListObj.admin_status"
+                                        (change)="updateUserStatus(userListObj._id, !userListObj.admin_status)">
+                                    <label class="custom-control-label" for="customSwitch1_{{i}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pl-3">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch2_{{i}}"
+                                        [(ngModel)]="userListObj.randcode"
+                                        (change)="updateStatus(userListObj._id, userListObj.randcode)">
+                                    <label class="custom-control-label" for="customSwitch2_{{i}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <a class="" [routerLink]="['edit/' + userListObj?._id ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="userList.length == 0 ">
+                    <tr class="text-center">
+                        <td colspan="8">No User Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="userList.length > 0">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

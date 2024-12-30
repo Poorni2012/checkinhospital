@@ -1,0 +1,70 @@
+<nb-card class="default">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Deposit History Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getDepositList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getDepositList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User Email</th>
+                    <th scope="col">Currency Name</th>
+                    <th scope="col">Currency Symbol</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Transaction Hash</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let depositListObj of depositList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ depositListObj?.mail }}</td>
+                        <td>{{ depositListObj?.currency_name }}</td>
+                        <td class="font-weight-bold pt-3 caption text-uppercase status-basic">{{
+                            depositListObj?.currency_symbol }}</td>
+                        <td>{{ Number(depositListObj?.amount || 0).toFixed(8) }}</td>
+                        <td>{{ depositListObj?.wallet_txid?.substring(0, 10) + '...' +
+                            depositListObj?.wallet_txid?.substring(55, 66) }}</td>
+                        <td class="font-weight-bold pt-3 caption status-success">{{ depositListObj?.STATUS }}</td>
+                        <td>{{ depositListObj.DATETIME | date: 'medium' }}</td>
+                        <td>
+                            <nb-icon icon="copy-outline" (click)="viewTransaction(depositListObj?.wallet_txid)"
+                                pack="eva">
+                            </nb-icon>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="depositList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="9">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="depositList.length > 0">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

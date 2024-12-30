@@ -1,0 +1,493 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                HOMEPAGE SETTINGS
+            </nb-card-header>
+            <nb-card-body>
+                <form #homeContentForm="ngForm" (ngSubmit)="updateHomeContent(homeContentForm)">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <h5 class="form-control-label">Homepage Content Settings</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Title 1</label>
+                                <ckeditor [(ngModel)]="getHomeObj.title_1" #title_1="ngModel" name="title_1" required
+                                    [config]="ckeConfig" debounce="500">
+                                </ckeditor>
+                                <ng-container
+                                    *ngIf="title_1.invalid && ( title_1.touched || title_1.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="title_1.errors?.required">
+                                        Title 1 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Description 1</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.description_1"
+                                    #description_1="ngModel" name="description_1" required></ckeditor>
+                                <ng-container
+                                    *ngIf="description_1.invalid && ( description_1.touched || description_1.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="description_1.errors?.required">
+                                        Description 1 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Title 2</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.title_2" #title_2="ngModel"
+                                    name="title_2" required></ckeditor>
+                                <ng-container
+                                    *ngIf="title_2.invalid && ( title_2.touched || title_2.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="title_2.errors?.required">
+                                        Title 2 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Description 2</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.description_2"
+                                    #description_2="ngModel" name="description_2" required></ckeditor>
+                                <ng-container
+                                    *ngIf="description_2.invalid && ( description_2.touched || description_2.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="description_2.errors?.required">
+                                        Description 2 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Title 3</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.title_3" #title_3="ngModel"
+                                    name="title_3" required></ckeditor>
+                                <ng-container
+                                    *ngIf="title_3.invalid && ( title_3.touched || title_3.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="title_3.errors?.required">
+                                        Title 3 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Description 3</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.description_3"
+                                    #description_3="ngModel" name="description_3" required></ckeditor>
+                                <ng-container
+                                    *ngIf="description_3.invalid && ( description_3.touched || description_3.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="description_3.errors?.required">
+                                        Description 3 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Title 2</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.title_4" #title_4="ngModel"
+                                    name="title_4" required></ckeditor>
+                                <ng-container
+                                    *ngIf="title_4.invalid && ( title_4.touched || title_4.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="title_4.errors?.required">
+                                        Title 4 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Description 4</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.description_4"
+                                    #description_4="ngModel" name="description_4" required></ckeditor>
+                                <ng-container
+                                    *ngIf="description_4.invalid && ( description_4.touched || description_4.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="description_4.errors?.required">
+                                        Description is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Title 5</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.title_5" #title_5="ngModel"
+                                    name="title_5" required></ckeditor>
+                                <ng-container
+                                    *ngIf="title_5.invalid && ( title_5.touched || title_5.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="title_5.errors?.required">
+                                        Title 5 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Description 1</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.description_5"
+                                    #description_5="ngModel" name="description_5" required></ckeditor>
+                                <ng-container
+                                    *ngIf="description_5.invalid && ( description_5.touched || description_5.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="description_5.errors?.required">
+                                        Description 5 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Title 6</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.title_6" #title_6="ngModel"
+                                    name="title_6" required></ckeditor>
+                                <ng-container
+                                    *ngIf="title_6.invalid && ( title_6.touched || title_6.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="title_6.errors?.required">
+                                        Title 6 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Description 6</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.description_6"
+                                    #description_6="ngModel" name="description_6" required></ckeditor>
+                                <ng-container
+                                    *ngIf="description_6.invalid && ( description_6.touched || description_6.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="description_6.errors?.required">
+                                        Description 6 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Title 7</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.title_7" #title_7="ngModel"
+                                    name="title_7" required></ckeditor>
+                                <ng-container
+                                    *ngIf="title_7.invalid && ( title_7.touched || title_7.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="title_7.errors?.required">
+                                        Title 7 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Description 7</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.description_7"
+                                    #description_7="ngModel" name="description_7" required></ckeditor>
+                                <ng-container
+                                    *ngIf="description_7.invalid && ( description_7.touched || description_7.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="description_7.errors?.required">
+                                        Description 7 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Title 8</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.title_8" #title_8="ngModel"
+                                    name="title_8" required></ckeditor>
+                                <ng-container
+                                    *ngIf="title_8.invalid && ( title_8.touched || title_8.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="title_8.errors?.required">
+                                        Title 8 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label for="exampleInputPassword1" class="label">Description 8</label>
+                                <ckeditor [config]="ckeConfig" [(ngModel)]="getHomeObj.description_8"
+                                    #description_8="ngModel" name="description_8" required></ckeditor>
+                                <ng-container
+                                    *ngIf="description_8.invalid && ( description_8.touched || description_8.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="description_8.errors?.required">
+                                        Description 8 is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Button Name 1</label>
+                            <input type="text" nbInput fullWidth placeholder="Button Name 1" name="button_1"
+                                [(ngModel)]="getHomeObj.button_1" #button_1="ngModel" required
+                                [status]="button_1.dirty ? (button_1.invalid  ? 'danger' : 'success') : button_1.touched ? 'danger' : 'basic' ">
+                            <ng-container *ngIf="!button_1?.valid && (button_1.touched || button_1?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="button_1.errors?.required">
+                                    Button Name 1 is required!
+                                </p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Button Link 1</label>
+                            <input type="text" nbInput fullWidth placeholder="Button Link 1" name="button_1_link"
+                                pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                [(ngModel)]="getHomeObj.button_1_link" #button_1_link="ngModel" required
+                                [status]="button_1_link.dirty ? (button_1_link.invalid  ? 'danger' : 'success') : button_1_link.touched ? 'danger' : 'basic' ">
+                            <ng-container
+                                *ngIf="!button_1_link?.valid && (button_1_link.touched || button_1_link?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="button_1_link.errors?.required">
+                                    Button Link 1 is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="button_1_link.errors?.pattern">
+                                    Enter Valid URL </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Button Name 2</label>
+                            <input type="text" nbInput fullWidth placeholder="Button Name 1" name="button_2"
+                                [(ngModel)]="getHomeObj.button_2" #button_2="ngModel" required
+                                [status]="button_2.dirty ? (button_2.invalid  ? 'danger' : 'success') : button_2.touched ? 'danger' : 'basic' ">
+                            <ng-container *ngIf="!button_2?.valid && (button_2.touched || button_2?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="button_2.errors?.required">
+                                    Button Name 2 is required!
+                                </p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Button Link 2</label>
+                            <input type="text" nbInput fullWidth placeholder="Button Link 2" name="button_2_link"
+                                pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                [(ngModel)]="getHomeObj.button_2_link" #button_2_link="ngModel" required
+                                [status]="button_2_link.dirty ? (button_2_link.invalid  ? 'danger' : 'success') : button_2_link.touched ? 'danger' : 'basic' ">
+                            <ng-container
+                                *ngIf="!button_2_link?.valid && (button_2_link.touched || button_2_link?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="button_2_link.errors?.required">
+                                    Button Link 2 is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="button_2_link.errors?.pattern">
+                                    Enter Valid URL </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Button Name 3</label>
+                            <input type="text" nbInput fullWidth placeholder="Button Name 3" name="button_3"
+                                [(ngModel)]="getHomeObj.button_3" #button_3="ngModel" required
+                                [status]="button_3.dirty ? (button_3.invalid  ? 'danger' : 'success') : button_3.touched ? 'danger' : 'basic' ">
+                            <ng-container *ngIf="!button_3?.valid && (button_3.touched || button_3?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="button_3.errors?.required">
+                                    Button Name 3 is required!
+                                </p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail3" class="label form-control-label">Button Link 3</label>
+                            <input type="text" nbInput fullWidth placeholder="Button Link 3" name="button_3_link"
+                                pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                [(ngModel)]="getHomeObj.button_3_link" #button_3_link="ngModel" required
+                                [status]="button_3_link.dirty ? (button_3_link.invalid  ? 'danger' : 'success') : button_3_link.touched ? 'danger' : 'basic' ">
+                            <ng-container
+                                *ngIf="!button_3_link?.valid && (button_3_link.touched || button_3_link?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="button_3_link.errors?.required">
+                                    Button Link 3 is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="button_3_link.errors?.pattern">
+                                    Enter Valid URL </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Button Name 4</label>
+                            <input type="text" nbInput fullWidth placeholder="Button Name 4" name="button_4"
+                                [(ngModel)]="getHomeObj.button_4" #button_4="ngModel" required
+                                [status]="button_4.dirty ? (button_4.invalid  ? 'danger' : 'success') : button_4.touched ? 'danger' : 'basic' ">
+                            <ng-container *ngIf="!button_4?.valid && (button_4.touched || button_4?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="button_4.errors?.required">
+                                    Button Name 4 is required!
+                                </p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Button Link 4</label>
+                            <input type="text" nbInput fullWidth placeholder="Button Link 4" name="button_4_link"
+                                pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                [(ngModel)]="getHomeObj.button_4_link" #button_4_link="ngModel" required
+                                [status]="button_4_link.dirty ? (button_4_link.invalid  ? 'danger' : 'success') : button_4_link.touched ? 'danger' : 'basic' ">
+                            <ng-container
+                                *ngIf="!button_4_link?.valid && (button_4_link.touched || button_4_link?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="button_4_link.errors?.required">
+                                    Button Link 4 is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="button_4_link.errors?.pattern">
+                                    Enter Valid URL </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword11" class="label form-control-label">Image_1 ( <span
+                                    class="caption status-danger pt-2">* Image Resolution should be 135 x 240 px
+                                </span> )</label>
+                            <div class="upload-bg my-2">
+                                <input type="file" class="upload" id="upload-btn-1" nbInput fullWidth
+                                    (change)="onSelectIeoFile($event)" name="image1" [(ngModel)]="logoImage"
+                                    #image_1="ngModel" accept="image/png, image/jpeg, image/jpg, image/svg+xml"
+                                    [status]="(getHomeObj.image_1 == undefined || getHomeObj.image_1 == null || getHomeObj.image_1 == '') ? 'danger' : 'success' " />
+                                <label class="file-upload-1" for="upload-btn-1">
+                                    <div class="p-2">
+                                        <img src="../../../../assets/images/addicon1.webp" alt="" class="profile-image"
+                                            *ngIf="getHomeObj.image_1 == undefined || getHomeObj.image_1 == null || getHomeObj.image_1 == ''">
+                                        <img class="profile-image"
+                                            [src]="_sanitizer.bypassSecurityTrustResourceUrl(getHomeObj.image_1)" alt=""
+                                            *ngIf="getHomeObj.image_1 != undefined && getHomeObj.image_1 != null && getHomeObj.image_1 != ''">
+                                    </div>
+                                </label>
+                            </div>
+                            <ng-container *ngIf="image_1.invalid && ( image_1.touched || image_1.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="image_1.errors?.required">
+                                    Image_1 is required! </p>
+                            </ng-container>
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword15" class="label form-control-label">Image_2 ( <span
+                                    class="caption status-danger pt-2">* Image Resolution should be 135 x 240 px
+                                </span> )</label>
+                            <div class="upload-bg my-2">
+                                <input type="file" class="upload" id="upload-btn-2" nbInput fullWidth
+                                    (change)="onSelectFeatureFile($event)" name="image" [(ngModel)]="favIcon"
+                                    #image_2="ngModel" accept="image/png, image/jpeg, image/jpg, image/svg+xml"
+                                    [status]="(getHomeObj.image_2 == undefined || getHomeObj.image_2 == null || getHomeObj.image_2 == '') ? 'danger' : 'success' " />
+                                <label class="file-upload-1" for="upload-btn-2">
+                                    <div class="p-2">
+                                        <img src="../../../../assets/images/addicon1.webp" alt="" class="profile-image"
+                                            *ngIf="getHomeObj.image_2 == undefined || getHomeObj.image_2 == null || getHomeObj.image_2 == ''">
+                                        <img class="profile-image"
+                                            [src]="_sanitizer.bypassSecurityTrustResourceUrl(getHomeObj.image_2)" alt=""
+                                            *ngIf="getHomeObj.image_2 != undefined && getHomeObj.image_2 != null && getHomeObj.image_2 != ''">
+                                    </div>
+                                </label>
+                            </div>
+                            <ng-container *ngIf="image_2.invalid && ( image_2.touched || image_2.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="image_2.errors?.required">
+                                    Image_2 is required! </p>
+                            </ng-container>
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword15" class="label form-control-label">Image_3 ( <span
+                                    class="caption status-danger pt-2">* Image Resolution should be 135 x 240 px
+                                </span> )</label>
+                            <div class="upload-bg my-2">
+                                <input type="file" class="upload" id="upload-btn-3" nbInput fullWidth
+                                    (change)="onSelectImage3($event)" name="image3" [(ngModel)]="image3"
+                                    #image_3="ngModel" accept="image/png, image/jpeg, image/jpg, image/svg+xml"
+                                    [status]="(getHomeObj.image_3 == undefined || getHomeObj.image_3 == null || getHomeObj.image_3 == '') ? 'danger' : 'success' " />
+                                <label class="file-upload-1" for="upload-btn-3">
+                                    <div class="p-2">
+                                        <img src="../../../../assets/images/addicon1.webp" alt="" class="profile-image"
+                                            *ngIf="getHomeObj.image_3 == undefined || getHomeObj.image_3 == null || getHomeObj.image_3 == ''">
+                                        <img class="profile-image"
+                                            [src]="_sanitizer.bypassSecurityTrustResourceUrl(getHomeObj.image_3)" alt=""
+                                            *ngIf="getHomeObj.image_3 != undefined && getHomeObj.image_3 != null && getHomeObj.image_3 != ''">
+                                    </div>
+                                </label>
+                            </div>
+                            <ng-container *ngIf="image_3.invalid && ( image_3.touched || image_3.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="image_3.errors?.required">
+                                    Image_3 is required! </p>
+                            </ng-container>
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword15" class="label form-control-label">Image_4 ( <span
+                                    class="caption status-danger pt-2">* Image Resolution should be 135 x 240 px
+                                </span> )</label>
+                            <div class="upload-bg my-2">
+                                <input type="file" class="upload" id="upload-btn-4" nbInput fullWidth
+                                    (change)="onSelectImage4($event)" name="image4" [(ngModel)]="image4"
+                                    #image_4="ngModel" accept="image/png, image/jpeg, image/jpg, image/svg+xml"
+                                    [status]="(getHomeObj.image_4 == undefined || getHomeObj.image_4 == null || getHomeObj.image_4 == '') ? 'danger' : 'success' " />
+                                <label class="file-upload-1" for="upload-btn-4">
+                                    <div class="p-2">
+                                        <img src="../../../../assets/images/addicon1.webp" alt="" class="profile-image"
+                                            *ngIf="getHomeObj.image_4 == undefined || getHomeObj.image_4 == null || getHomeObj.image_4 == ''">
+                                        <img class="profile-image"
+                                            [src]="_sanitizer.bypassSecurityTrustResourceUrl(getHomeObj.image_4)" alt=""
+                                            *ngIf="getHomeObj.image_4 != undefined && getHomeObj.image_4 != null && getHomeObj.image_4 != ''">
+                                    </div>
+                                </label>
+                            </div>
+                            <ng-container *ngIf="image_4.invalid && ( image_4.touched || image_4.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="image_4.errors?.required">
+                                    Image_4 is required! </p>
+                            </ng-container>
+
+                        </div>
+
+                    </div>
+
+                    <div class="text-center pt-4 pb-4">
+                        <button nbButton class="col-md-2" type="submit" status="primary" [class.btn-pulse]="onSubmit">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <div class="d-flex">
+                    <div class="">
+                        Add FAQ
+                    </div>
+                    <div class="ml-auto" style="cursor: pointer;" [routerLink]="['/pages/faq-management/']">
+                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                        <span>Back</span>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <form #addfaq="ngForm" (ngSubmit)="addfaqDetails(addfaq)">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="label">Questions</label>
+                        <input type="text" nbInput fullWidth id="exampleInputEmail1" placeholder="Questions"
+                            [(ngModel)]="faqObj.question" #Questions="ngModel" name="questions"
+                            [status]="Questions.dirty ? (Questions.invalid  ? 'danger' : 'success') : Questions.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                            [attr.aria-invalid]="Questions.invalid && Questions.touched ? true : null" required>
+                        <ng-container *ngIf="Questions.invalid && ( Questions.touched || Questions.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="Questions.errors?.required">
+                                Questions required!
+                            </p>
+                        </ng-container>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputPassword1" class="label">Status</label>
+
+                        <nb-select fullWidth placeholder="Select mode" [(ngModel)]="faqObj.status" #siteStatus="ngModel"
+                            name="status"
+                            [status]="siteStatus.dirty ? (siteStatus.invalid  ? 'danger' : 'success') : siteStatus.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                            required>
+                            <ng-container
+                                *ngIf="!siteStatus?.valid && (siteStatus.touched || siteStatus.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="siteStatus.errors?.required">
+                                    Status required!
+                                </p>
+                            </ng-container>
+                            <nb-option value="Active">Active</nb-option>
+                            <nb-option value="InActive">InActive</nb-option>
+                        </nb-select>
+                    </div>
+                    
+                    <div>
+                        <label for="exampleInputPassword1" class="label">Content</label>
+                        <ckeditor [config]="ckeConfig" [(ngModel)]="faqObj.answer"
+                            #answer="ngModel" name="answer" required></ckeditor>
+                        <ng-container *ngIf="answer.invalid && ( answer.touched || answer.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="answer.errors?.required">
+                                Answer is required!
+                            </p>
+                        </ng-container>
+                    </div>
+                    <div class="text-center pt-4 pb-4">
+                        <button class="col-md-2" type="submit" nbButton status="primary">Submit</button>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

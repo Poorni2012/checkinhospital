@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <div class="d-flex">
+                    <div class="">
+                        Add Home page - Banner
+                    </div>
+                    <div class="ml-auto" [routerLink]="['/pages/mainhome-banner-management/']">
+                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                        <span>Back</span>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <form #bannertwoAddForm="ngForm" (ngSubmit)="addBannerTwoDetails(bannertwoAddForm)">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="label form-control-label">Title </label>
+                        <input type="text" nbInput fullWidth placeholder="Title" name="title"
+                            [(ngModel)]="bannertwoObj.title" #title="ngModel" required
+                            [status]="title.dirty ? (title.invalid  ? 'danger' : 'success') : title.touched ? 'danger' : 'basic' ">
+                        <ng-container *ngIf="!title?.valid && (title.touched || title?.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="title.errors?.required">
+                                Title is required!
+                            </p>
+                        </ng-container>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="label form-control-label">Image ( <span
+                                    class="caption status-danger pt-2">* Image Resolution should be 135 x 240 px
+                                </span> )</label>
+                            <div class="upload-bg my-2">
+                                <input type="file" class="upload" id="upload-btn-2" nbInput fullWidth
+                                    (change)="onSelectIeoFile($event)" name="image" [(ngModel)]="logoImage"
+                                    #image="ngModel" accept="image/png, image/jpeg, image/jpg, image/svg+xml"
+                                    [status]="(bannertwoObj.image == undefined || bannertwoObj.image == null || bannertwoObj.image == '') ? 'danger' : 'success' "
+                                    required />
+                                <label class="file-upload-1" for="upload-btn-2">
+                                    <div class="p-2">
+                                        <img src="../../../../assets/images/addicon1.webp" alt="" class="profile-image"
+                                            *ngIf="bannertwoObj.image == undefined || bannertwoObj.image == null || bannertwoObj.image == ''">
+                                        <img class="profile-image"
+                                            [src]="_sanitizer.bypassSecurityTrustResourceUrl(bannertwoObj.image)" alt=""
+                                            *ngIf="bannertwoObj.image != undefined && bannertwoObj.image != null && bannertwoObj.image != ''">
+                                    </div>
+                                </label>
+                            </div>
+                            <ng-container *ngIf="image.invalid && ( image.touched || image.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="image.errors?.required">
+                                    * Image is required ! </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="label">Content</label>
+                            <ckeditor [config]="ckeConfig" [(ngModel)]="bannertwoObj.content" #content="ngModel"
+                                name="content" required></ckeditor>
+                            <ng-container *ngIf="content.invalid && ( content.touched || content.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="content.errors?.required">
+                                    Content is required!
+                                </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="text-center pt-4 pb-4">
+                            <button class="col-md-2" type="submit" nbButton status="primary"
+                                [disabled]="onDisabled">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

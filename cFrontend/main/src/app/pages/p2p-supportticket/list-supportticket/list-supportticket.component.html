@@ -1,0 +1,70 @@
+<nb-card class="default">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Support Ticket Management
+            </div>
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Ticket Id</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container
+                    *ngFor="let suppportTicketListObj of suppportTicketList; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ suppportTicketListObj?.ticket_num }}</td>
+                        <td>{{ suppportTicketListObj?.email }}</td>
+                        <td>{{ suppportTicketListObj?.description }}</td>
+                        <td>{{ suppportTicketListObj?.status }}</td>
+                        <td>{{ suppportTicketListObj?.created_date | date: 'medium' }}</td>
+                        <!-- <td>
+                            <div class="pl-3">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch_{{i}}"
+                                        [(ngModel)]="suppportTicketListObj.status"
+                                        (change)="updateStatus(suppportTicketListObj._id, suppportTicketListObj.status)">
+                                    <label class="custom-control-label" for="customSwitch_{{i}}"></label>
+                                </div>
+                            </div>
+                        </td> -->
+                        <td>
+                            <ng-container *ngIf="writeStatus">
+                                <a class="" [routerLink]="['edit/' + suppportTicketListObj?._id ]">
+                                    <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="!writeStatus">
+                                <a class="" [ngDisableLink]="true" style="opacity: 0.35;">
+                                    <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                                </a>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="suppportTicketList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="7">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="suppportTicketList.length > 0">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

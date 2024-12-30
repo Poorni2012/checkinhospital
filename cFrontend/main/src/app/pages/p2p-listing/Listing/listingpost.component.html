@@ -1,0 +1,68 @@
+<nb-card class="default">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Users Listing
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <div class="md-form mt-0 col-auto">
+                        <!-- <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getList()"></nb-icon>
+                            </div>
+                        </nb-form-field> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User Email</th>
+                    <th scope="col">Post Type</th>
+                    <!-- <th scope="col">Pair</th> -->
+                    <th scope="col">Price</th>
+                    <th scope="col">Order Qty</th>                   
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let ListObj of List; let i = index; trackBy: trackByFn">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ decrypt(ListObj?.userEmail[0]) }}{{ decrypt(ListObj?.userEmail[1]) }}</td>
+                        <td [ngClass]="{'green-text': ListObj?.post_type.toLowerCase() === 'buy', 'red-text': ListObj?.post_type.toLowerCase() === 'sell'}">
+                            {{ ListObj?.post_type.toUpperCase() }}
+                          </td><!-- <td class="font-weight-bold pt-3 caption text-uppercase status-basic">{{
+                            ListObj?.currency_symbol }}</td> -->
+                        <td>{{ Number(ListObj?.price || 0).toFixed(8)}}</td>
+                        <td>{{ Number(ListObj?.total_amount || 0).toFixed(8) }}</td>
+                      
+                        <td>{{ ListObj.created_at | date: 'medium' }}</td>
+                        <td>
+                            <a class="" [routerLink]="['view/' + ListObj?._id ]">
+                                <nb-icon icon="eye-outline" pack="eva" class="status-primary"></nb-icon></a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="List.length == 0">
+                    <tr class="text-center">
+                        <td colspan="9">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="List.length > 0">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

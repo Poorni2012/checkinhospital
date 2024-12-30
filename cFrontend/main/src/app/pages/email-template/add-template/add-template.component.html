@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <div class="d-flex">
+                    <div class="">
+                        Add Email Template
+                    </div>
+                    <div class="ml-auto" [routerLink]="['/pages/email-template/']">
+                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                        <span>Back</span>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <form #addEmailTemplateForm="ngForm" (ngSubmit)="addEmailTemplate(addEmailTemplateForm)">
+                    <div class="form-group">
+                        <label for="title" class="label">Title</label>
+                        <input type="text" nbInput fullWidth id="title" placeholder="Title"
+                            [(ngModel)]="emailTemplateObj.title" #title="ngModel" name="title"
+                            [status]="title.dirty ? (title.invalid  ? 'danger' : 'success') : title.touched ? (title.invalid  ? 'danger' : 'success') : onSubmit ? 'danger' :'basic' "
+                            [attr.aria-invalid]="title.invalid && title.touched ? true : null" required>
+                        <ng-container *ngIf="title.invalid && ( title.touched || title.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="title.errors?.required">
+                                Title is required!
+                            </p>
+                        </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1" class="label">Subject</label>
+                        <input type="text" nbInput fullWidth id="exampleInputPassword1" placeholder="Subject"
+                            [(ngModel)]="emailTemplateObj.subject" #subject="ngModel" name="subject"
+                            [status]="subject.dirty ? (subject.invalid  ? 'danger' : 'success') : subject.touched ? (subject.invalid  ? 'danger' : 'success') : onSubmit ? 'danger' :'basic'"
+                            [attr.aria-invalid]="subject.invalid && subject.touched ? true : null" required>
+                        <ng-container *ngIf="subject.invalid && ( subject.touched || subject.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="subject.errors?.required">
+                                Subject is required!
+                            </p>
+                        </ng-container>
+                    </div>
+                    <div>
+                        <label for="exampleInputPassword1" class="label">Template</label>
+                        <ckeditor [config]="ckeConfig" [(ngModel)]="emailTemplateObj.template" #template="ngModel"
+                            name="template" required>
+                        </ckeditor>
+                        <ng-container *ngIf="template.invalid && ( template.touched || template.dirty || onSubmit)">
+                            <p class="caption status-danger pt-2" *ngIf="template.errors?.required">
+                                Template is required!
+                            </p>
+                        </ng-container>
+                    </div>
+                    <div class="text-center pt-4 pb-4">
+                        <button class="col-md-2" type="submit" nbButton status="primary">Submit</button>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

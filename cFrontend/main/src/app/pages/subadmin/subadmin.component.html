@@ -1,0 +1,85 @@
+<nb-card class="defaultcss">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Sub-Admin Management
+            </div>
+            <ng-container *ngIf="writeStatus">
+                <div class="ml-auto sub" [routerLink]="['add']">
+                    <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+                    <span class="ml-2 sub">Add Sub-Admin</span>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!writeStatus">
+                <div class="ml-auto" aria-disabled="true">
+                    <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+                    <span class="ml-2">Add Sub-Admin</span>
+                </div>
+            </ng-container>
+        </div>
+    </nb-card-header>
+
+    
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let subAdminListObj of subAdminList; let i = index">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ subAdminListObj?.email }}</td>
+                        <td>
+                            <ng-container *ngIf="writeStatus">
+                                <a class="" [routerLink]="['edit/' + subAdminListObj?._id ]">
+                                    <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                                </a>
+                                <a class="col-6" (click)="openWithoutBackdropClick(dialog,subAdminListObj._id)">
+                                    <nb-icon icon="trash-outline" pack="eva" class="status-danger"></nb-icon>
+                                </a>
+                            </ng-container>
+
+                            <ng-container *ngIf="!writeStatus">
+                                <a class="" [ngDisableLink]="true" style="opacity: 0.35;">
+                                    <nb-icon icon="edit-outline" pack="eva" class="status-success"></nb-icon>
+                                </a>
+
+                                <a class="col-6" style="opacity: 0.35;" [ngDisableLink]="true">
+                                    <nb-icon icon="trash-outline" pack="eva" class="status-danger"></nb-icon>
+                                </a>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="subAdminList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="4">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="totalItems > 0">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card>
+        <nb-card-header>Confirm Message</nb-card-header>
+        <nb-card-body>{{ data }}
+            <br>
+        </nb-card-body>
+        <nb-card-footer>
+            <button nbButton (click)="ref.close();deleteSubadmin()">Submit</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button nbButton (click)="ref.close()">Close </button>
+        </nb-card-footer>
+    </nb-card>
+</ng-template>

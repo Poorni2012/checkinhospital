@@ -1,0 +1,149 @@
+<div class="row d-flex">
+  <form #cmsAddForm="ngForm" (ngSubmit)="submitLogin(cmsAddForm)">
+    <div class="row">
+      <div class="col-md-6">
+        <nb-card class="defaultcss">
+          <nb-card-header>
+            <div class="d-flex">
+              <div class="">
+                Add Sub-Admin
+              </div>
+            </div>
+          </nb-card-header>
+          <nb-card-body style="min-height: 600px; background-color: white;">
+            <div class="row">
+              <div class="col-md-10">
+                <label for="title" class="label">Email Address</label>
+                <input type="text" class="form-control" nbInput fullWidth id="email" placeholder="Email Address"
+                  [(ngModel)]="subadminobj.email" #email="ngModel" name="email" required>
+                <ng-container *ngIf="email.invalid && ( email.touched || onSubmit )">
+                  <p class="caption status-danger pt-2" *ngIf="email.errors?.required">
+                    Email Address is required!
+                  </p>
+                </ng-container>
+              </div>
+
+              <div class="col-md-10">
+                <label for="title" class="label">Password</label>
+                <nb-form-field>
+                  <input type="{{ showPassword ? 'text':'password'}}" nbInput fullWidth id="Password"
+                    placeholder="Password" [(ngModel)]="subadminobj.password" #Password="ngModel" name="password"
+                    required>
+
+                  <button type="button" nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                    <nb-icon [icon]="showPassword ?  'eye-outline':'eye-off-outline'" pack="eva"
+                      [attr.aria-label]="showPassword ? 'show password':'hide password'">
+                    </nb-icon>
+                  </button>
+
+                </nb-form-field>
+                <ng-container *ngIf="Password.invalid && (Password.touched || onSubmit)">
+                  <p class="caption status-danger pt-2" *ngIf="Password.errors?.required">
+                    Password is required!
+                  </p>
+                </ng-container>
+              </div>
+
+              <div class="mb-4 pt-2">
+                <label for="title" class="label">Draw Pattern</label>
+
+                <div id="patternContainer"
+                  style="border-radius: 10px;background-image:linear-gradient(141deg, #0f4afc 0%, #2a5efd 51%, #3366ff 75%); margin: auto">
+                </div>
+                <input type="hidden" name="patterncode" id="patterncode">
+              </div>
+
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="col-md-6 ">
+        <nb-card class="defaultcss">
+          <nb-card-header>
+            <div class="d-flex">
+              <div class="">
+                Allowed Modules
+              </div>
+              <div class="ml-auto sub" [routerLink]="['/pages/subadmin/']">
+                <nb-icon icon="arrow-ios-back-outline" pack="eva" class="sub"></nb-icon>
+                <span class="ml-2 sub">Back</span>
+              </div>
+            </div>
+          </nb-card-header>
+          <nb-card-body style="min-height: 600px; background-color: white;">
+            <div class="d-flex justify-content-center">
+              <table class="mt-5 w-100">
+                <tr>
+                  <th class="text-center pb-4">Allowed To</th>
+                  <th class="text-center pb-4">Access For</th>
+                </tr>
+
+                <tr *ngFor="let item of list">
+                  <td>
+                    <div class="d-flex justify-content-start align-items-center" type="'button">
+                      <input id="check" type="checkbox" [(ngModel)]="item.status" [ngModelOptions]="{standalone: true}"
+                        (change)="doSomething($event);" #check="ngModel" name="check" required class="mr-2" />
+                      <label for="check" class="mr-1 mb-0">{{item.title}}</label>
+                    </div>
+                    <ng-container *ngIf="item.children && item.status">
+                <tr *ngFor="let item1 of item.children">
+                  <div class="d-flex justify-content-start align-items-center" type="'button">
+                    <input id="contact" type="checkbox" [(ngModel)]="item1.status" [ngModelOptions]="{standalone: true}"
+                      (change)="doSomething($event);" #check="ngModel" name="check" required class="mr-2" />
+                    <label for="contact" class="mr-1 mb-0">{{item1.title}}</label>
+                  </div>
+                </tr>
+                </ng-container>
+                </td>
+
+                <td>
+                  <input id="support1" class="mr-1" type="checkbox" checked="true" disabled />
+                  <label for="support1">Read</label>
+
+                  <input id="support2" type="checkbox" class="mr-1" [(ngModel)]="item.writeStatus"
+                    [ngModelOptions]="{standalone: true}" (change)="doWrite($event);" class="ml-1" />
+                  <label for="support2">Write</label>
+
+                  <ng-container *ngIf="item.children && item.status">
+                    <tr *ngFor="let item1 of item.children">
+                      <input id="check1" type="checkbox" class="mr-1" checked="true" disabled />
+                      <label for="check1">Read</label>
+
+                      <input id="check2" type="checkbox" [(ngModel)]="item1.writeStatus" class="mr-1"
+                        [ngModelOptions]="{standalone: true}" (change)="doWrite($event);" class="ml-1" />
+                      <label for="check2">Write</label>
+                    </tr>
+                  </ng-container>
+
+                </td>
+
+                </tr>
+              </table>
+
+              <ng-container>
+                <p class="caption status-danger pt-2">
+                  {{status}}
+                </p>
+              </ng-container>
+
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <nb-card>
+          <nb-card-body>
+            <div class="text-center pt-3 pb-3">
+              <button class="col-md-2" type="submit" nbButton status="primary" [disabled]="onDisabled">Submit</button>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,60 @@
+<nb-card class="default">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="">
+                Feedback History Management
+            </div>
+            <div class="ml-auto">
+                <form class="form-inline waves-light" mdbWavesEffect>
+                    <!-- <div class="md-form mt-0 col-auto">
+                        <nb-form-field>
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Search" name="search"
+                                [(ngModel)]="searchValue" (keyup.enter)="getWithdrawList()" autocomplete="off">
+                            <div type="button" nbSuffix ghost>
+                                <nb-icon icon="search-outline" (click)="getWithdrawList()"></nb-icon>
+                            </div>
+                        </nb-form-field>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User Email</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Ratings</th>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Feedback Comments</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let feedbacklistObj of truelist; let i = index;">
+                    <tr>
+                        <th scope="row">{{ i+1 }}</th>
+                        <td class="font-weight-bold pt-3 caption status-basic">{{ feedbacklistObj?.email }}</td>
+                        <td>{{ feedbacklistObj?.name }}</td>
+                        <td>{{ Number(feedbacklistObj?.stars)}}</td>
+                        <td>{{ feedbacklistObj?.feedbackCount }}</td>
+                        <td> {{ feedbacklistObj?.feedbackcomments }}</td>
+                        <td>{{ feedbacklistObj.date | date: 'medium' }}</td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="truelist.length == 0">
+                    <tr class="text-center">
+                        <td colspan="9">No Data Found</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </nb-card-body>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="truelist.length > pageSize">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [rotate]="true"
+            [maxSize]="10" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+    </div>
+</nb-card>

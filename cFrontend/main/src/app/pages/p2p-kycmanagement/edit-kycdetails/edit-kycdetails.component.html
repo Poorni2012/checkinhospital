@@ -1,0 +1,184 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <div class="d-flex">
+                    <div class="">
+                        View KYC Details
+                    </div>
+                    <div class="ml-auto" [routerLink]="['/pages/kyc-management']">
+                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                        <span>Back</span>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <form #kycForm="ngForm" *ngIf="Object.keys(userObj).length > 0">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="usr_nam" class="label">User ID</label>
+                                <input type="text" nbInput fullWidth placeholder="User ID" [(ngModel)]="userObj.uid"
+                                    #uid="ngModel" name="uid" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="mil" class="label">Email</label>
+                                <input type="text" nbInput fullWidth id="mil" placeholder="Email"
+                                    [(ngModel)]="userObj.email" #email="ngModel" name="email" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="usr_nam" class="label">User Name</label>
+                                <input type="text" nbInput fullWidth placeholder="User Name"
+                                    [(ngModel)]="userObj.username" #username="ngModel" name="username" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="usr_id" class="label">Date Of Birth</label>
+                                <input type="text" nbInput fullWidth placeholder="DOB" [(ngModel)]="userObj.dob"
+                                    #dob="ngModel" name="dob" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="usr_id" class="label">Phone Number</label>
+                                <input type="text" nbInput fullWidth placeholder="Phone Number"
+                                    [(ngModel)]="userObj.phone" #phone="ngModel" name="phone" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="py-3">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Field Name</th>
+                                    <th scope="col">Uploaded Image</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col" colspan="2" class="text-center" *ngIf="showColumn">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="align-middle">1</th>
+                                    <td class="align-middle">KYC Front Image</td>
+                                    <td>
+                                        <div class="upload-profile">
+                                            <img [src]="userObj?.kyc_front" class="kyc-img"
+                                                (click)="showmodalImg(userObj?.kyc_front)"
+                                                class="img-fluid uploadedimg" />
+                                            <!-- <label for="uploadedFrontimg" class="uploadimg">
+                                                <input class="filetype" id="uploadedFrontimg" type="file"
+                                                    (change)="onSelectFile($event, 'kyc_front')">
+                                                <img src="assets/images/pencil-square.svg" class="img-thumbnail">
+                                            </label> -->
+                                        </div>
+                                    </td>
+                                    <td class="align-middle"
+                                        [ngClass]="{'text-danger': (userObj?.kyc_front_status != 'Approved'), 'text-success': (userObj?.kyc_front_status == 'Approved') }">
+                                        {{userObj?.kyc_front_status}}</td>
+                                    <td class="align-middle">
+                                        <div class="d-flex"
+                                            *ngIf="userObj?.kyc_front_status == 'Pending' && showColumn">
+                                            <nb-icon nbTooltip="Approve" icon="checkmark-circle-2-outline" pack="eva"
+                                                class="status-success"
+                                                (click)="updateKYCStatus('kyc_front_status', 'Approved', 'kyc_front_reason', '')"></nb-icon>
+                                            <nb-icon nbTooltip="Reject" icon="close-circle-outline" pack="eva"
+                                                class="status-danger"
+                                                (click)="openConfirmationDialog('single', 'kyc_front_status', 'Rejected', 'kyc_front_reason')"></nb-icon>
+                                        </div>
+                                    </td>
+                                    <td rowspan="2" class="align-middle">
+                                        <div class="text-center"
+                                            *ngIf="userObj?.kyc_front_status == 'Pending' && userObj?.kyc_back_status == 'Pending' && showColumn">
+                                            <nb-icon nbTooltip="Approve" icon="checkmark-circle-2-outline" pack="eva"
+                                                class="status-success"
+                                                (click)="updateAllKYCStatus('Approved', '')"></nb-icon>
+                                            <nb-icon nbTooltip="Reject" icon="close-circle-outline" pack="eva"
+                                                class="status-danger"
+                                                (click)="openConfirmationDialog('all', '', 'Rejected', '')"></nb-icon>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="align-middle">2</th>
+                                    <td class="align-middle">KYC Back Image</td>
+                                    <td>
+                                        <div class="upload-profile">
+                                            <img [src]="userObj?.kyc_back" class="kyc-img"
+                                                (click)="showmodalImg(userObj?.kyc_back)"
+                                                class="img-fluid uploadedimg" />
+                                            <!-- <label for="uploadedBackimg" class="uploadimg">
+                                                <input class="filetype" id="uploadedBackimg" type="file"
+                                                    (change)="onSelectFile($event, 'kyc_back')">
+                                                <img src="assets/images/pencil-square.svg" class="img-thumbnail">
+                                            </label> -->
+                                        </div>
+                                    </td>
+                                    <td class="align-middle"
+                                        [ngClass]="{'text-danger': (userObj?.kyc_back_status != 'Approved'), 'text-success': (userObj?.kyc_back_status == 'Approved') }">
+                                        {{userObj?.kyc_back_status}}</td>
+                                    <td class="align-middle">
+                                        <div class="d-flex" *ngIf="userObj?.kyc_back_status == 'Pending' && showColumn">
+                                            <nb-icon nbTooltip="Approve" icon="checkmark-circle-2-outline" pack="eva"
+                                                class="status-success"
+                                                (click)="updateKYCStatus('kyc_back_status', 'Approved', 'kyc_back_reason', '')"></nb-icon>
+                                            <nb-icon nbTooltip="Reject" icon="close-circle-outline" pack="eva"
+                                                class="status-danger"
+                                                (click)="openConfirmationDialog('single', 'kyc_back_status', 'Rejected', 'kyc_back_reason')"></nb-icon>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="align-middle">3</th>
+                                    <td class="align-middle">KYC Selfie Image</td>
+                                    <td>
+                                        <div class="upload-profile">
+                                            <img [src]="userObj?.kyc_selfie" class="kyc-img"
+                                                (click)="showmodalImg(userObj?.kyc_selfie)"
+                                                class="img-fluid uploadedimg" />
+                                            <!-- <label for="uploadedSelfieimg" class="uploadimg">
+                                                <input class="filetype" id="uploadedSelfieimg" type="file"
+                                                    (change)="onSelectFile($event, 'kyc_selfie')">
+                                                <img src="assets/images/pencil-square.svg" class="img-thumbnail">
+                                            </label> -->
+                                        </div>
+                                    </td>
+                                    <td class="align-middle"
+                                        [ngClass]="{'text-danger': (userObj?.kyc_selfie_status != 'Approved'), 'text-success': (userObj?.kyc_selfie_status == 'Approved') }">
+                                        {{userObj?.kyc_selfie_status}}</td>
+                                    <td class="align-middle">
+                                        <div class="d-flex"
+                                            *ngIf="userObj?.kyc_selfie_status == 'Pending' && showColumn">
+                                            <nb-icon nbTooltip="Approve" icon="checkmark-circle-2-outline" pack="eva"
+                                                class="status-success"
+                                                (click)="updateKYCStatus('kyc_selfie_status', 'Approved', 'kyc_selfie_reason', '')"></nb-icon>
+                                            <nb-icon nbTooltip="Reject" icon="close-circle-outline" pack="eva"
+                                                class="status-danger"
+                                                (click)="openConfirmationDialog('single', 'kyc_selfie_status', 'Rejected', 'kyc_selfie_reason')"></nb-icon>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                    <td colspan="6" class="text-center">
+                                        <button nbButton class="col-md-2" type="button" status="primary"
+                                            (click)="updateUserKYC()">
+                                            Update User KYC
+                                        </button>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+
+<div id="myModal" class="modal">
+    <span (click)="closemodalImg()" class="close">&times;</span>
+    <img [src]="modalImg" class="modal-content1" id="img01" alt="">
+    <div id="caption"></div>
+</div>

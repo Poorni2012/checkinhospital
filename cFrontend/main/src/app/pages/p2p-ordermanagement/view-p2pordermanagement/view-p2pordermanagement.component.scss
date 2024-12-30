@@ -1,0 +1,283 @@
+.example-accordion {
+  display: block;
+  max-width: 500px;
+}
+
+.example-accordion-item {
+  display: block;
+  border: solid 1px #ccc;
+}
+
+.example-accordion-item+.example-accordion-item {
+  border-top: none;
+}
+
+.example-accordion-item-header {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.example-accordion-item-description {
+  font-size: 0.85em;
+  color: #999;
+}
+
+.example-accordion-item-header,
+.example-accordion-item-body {
+  padding: 16px;
+}
+
+.example-accordion-item-header:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+
+.example-accordion-item:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.example-accordion-item:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.profile-image {
+  height: auto;
+  width: 200px !important;
+}
+
+img.user-ms {
+  right: 20px;
+  width: 35px;
+  height: 35px;
+  border-radius: 100px;
+}
+
+img.attachment-ms {
+  right: 20px;
+  width: 225px;
+  height: 200px;
+}
+
+.joh-cha-card-total {
+  min-height: 310px;
+  max-height: 310px;
+}
+
+.iconspan {
+  color: gray !important;
+}
+
+.img-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+@-webkit-keyframes zoom {
+  from {
+    -webkit-transform: scale(0)
+  }
+
+  to {
+    -webkit-transform: scale(1)
+  }
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0)
+  }
+
+  to {
+    transform: scale(1)
+  }
+}
+
+.close {
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 30px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.f-4 {
+  font-size: xx-small !important;
+  font-weight: 800;
+}
+
+.upload-bg {
+  background: #f0f0f0;
+  border-radius: 4px;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload {
+  position: absolute;
+  visibility: hidden;
+}
+
+.file-upload-1 {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: #f0f0f0;
+  border: 2px dashed #9fa4ad;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 0;
+}
+
+.file-upload-1 .chos {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #737373;
+}
+
+.content-cen {
+  padding-top: 145px;
+}
+
+.chartmaincontent {
+  height: calc(100% - 140px);
+  min-height: 300px;
+}
+
+.messagecnt {
+  .mc-img {
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.whitebgborderCard {
+  background: #f7f9fc;
+  border: 1px solid #E4E3E3;
+  box-shadow: 4px 1px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+
+  &.round24 {
+    border-radius: 24px;
+
+    @media (max-width: 767px) {
+      border-radius: 10px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    border-radius: 10px;
+  }
+}
+
+.uploadfile {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content1 {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+
+.modal-content1,
+#caption {
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {
+    -webkit-transform: scale(0)
+  }
+
+  to {
+    -webkit-transform: scale(1)
+  }
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0)
+  }
+
+  to {
+    transform: scale(1)
+  }
+}
+
+.close {
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 700px) {
+  .modal-content {
+    width: 100%;
+  }
+}
+
+.f-16 {
+  font-size: 16px !important;
+}

@@ -1,0 +1,382 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                Site Settings
+            </nb-card-header>
+            <nb-card-body>
+                <form #settingsForm="ngForm" (ngSubmit)="updateSitesettings(settingsForm)">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <h5 class="form-control-label">General Settings</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Site Name</label>
+                            <input type="text" nbInput fullWidth placeholder="Site Name" name="name"
+                                [(ngModel)]="getsetObj.site_name" #name="ngModel" minlength="3"
+                                pattern="[a-zA-Z0-9\s]*$" required
+                                [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : name.touched ? 'danger' : 'basic' ">
+                            <ng-container *ngIf="!name?.valid && (name.touched || name?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="name.errors?.required">
+                                    Site Name is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="name.errors?.pattern">
+                                    Invalid Site Name
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="name.errors?.minlength">
+                                    Minimum 3 characters required
+                                </p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1" class="label form-control-label">Site Email</label>
+                            <input type="text" nbInput fullWidth placeholder="Site Email" required
+                                [(ngModel)]="getsetObj.site_email" #email="ngModel" name="email"
+                                pattern="[A-Za-z0-9.-_]{1,}@[A-Za-z.-]{2,}[.]{1}[A-Za-z]{2,}"
+                                [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : email.touched ? 'danger' : 'basic' "
+                                required [attr.aria-invalid]="email.invalid && email.touched ? true : null"
+                                class="lowercase">
+                            <ng-container *ngIf="!email?.valid && (email.touched || email?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="email.errors?.required">
+                                    Email is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="email.errors?.pattern">
+                                    Please enter valid Email (eg. xyz28@gmail.com)
+                                </p>
+                            </ng-container>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1" class="label form-control-label">Site Logo ( <span
+                                    class="caption status-danger pt-2">* Image Resolution should be 250 x 73 px </span>
+                                )</label>
+                            <div class="upload-bg my-2">
+                                <input type="file" class="upload" id="upload-btn-2" nbInput fullWidth
+                                     name="image" [(ngModel)]="logoImage"
+                                    #imageData (change)="uploadFileSiteLogo(imageData.files, $event)" accept="image/png, image/jpeg, image/jpg"
+                                    [status]="(getsetObj.site_logo == undefined || getsetObj.site_logo == null || getsetObj.site_logo == '') ? 'danger' : 'success' " />
+                                <label class="file-upload-1" for="upload-btn-2">
+                                    <div class="p-2">
+                                        <img src="" alt="" class="profile-image"
+                                            *ngIf="getsetObj.site_logo == undefined || getsetObj.site_logo == null || getsetObj.site_logo == ''">
+                                        <img class="profile-image" [src]="getsetObj.site_logo" alt=""
+                                            *ngIf="getsetObj.site_logo != undefined && getsetObj.site_logo != null && getsetObj.site_logo != ''">
+                                    </div>
+                                </label>
+                            </div>
+                            <ng-container
+                                *ngIf="getsetObj.site_logo == undefined || getsetObj.site_logo == null || getsetObj.site_logo == ''">
+                                <p class="caption status-danger pt-2">
+                                    Site Logo is required!
+                                </p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1" class="label form-control-label">Site FavIcon ( <span
+                                    class="caption status-danger pt-2">* Image Resolution should be 16 x 16 px </span>
+                                )</label>
+                            <div class="upload-bg my-2">
+                                <input type="file" class="upload" id="upload-btn-3" nbInput fullWidth
+                                     name="image" [(ngModel)]="favIcon"
+                                    #imageDataFav accept="image/png, image/jpeg, image/jpg" (change)="uploadFileFavIcon(imageDataFav.files,$event)"
+                                    [status]="(getsetObj.site_favicon == undefined || getsetObj.site_favicon == null || getsetObj.site_favicon == '') ? 'danger' : 'success' " />
+                                <label class="file-upload-2" for="upload-btn-3">
+                                    <div class="p-2">
+                                        <img src="" alt="" class="profile-image"
+                                            *ngIf="getsetObj.site_favicon == undefined || getsetObj.site_favicon == null || getsetObj.site_favicon == ''">
+                                        <img class="profile-image" [src]="getsetObj.site_favicon" alt=""
+                                            *ngIf="getsetObj.site_favicon != undefined && getsetObj.site_favicon != null && getsetObj.site_favicon != ''">
+                                    </div>
+                                </label>
+                            </div>
+                            <ng-container
+                                *ngIf="getsetObj.site_favicon == undefined || getsetObj.site_favicon == null || getsetObj.site_favicon == ''">
+                                <p class="caption status-danger pt-2">
+                                    FavIcon is required!
+                                </p>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="exampleInputPassword1" class="label form-control-label">Address</label>
+                            <input type="text" nbInput fullWidth placeholder="Address" [(ngModel)]="getsetObj.address"
+                                #Address="ngModel" name="address"
+                                [status]="Address.dirty ? (Address.invalid  ? 'danger' : 'success') : Address.touched ? 'danger' : 'basic' "
+                                required>
+                            <ng-container *ngIf="!Address?.valid && (Address.touched || Address?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="Address.errors?.required">
+                                    Address is required!
+                                </p>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="exampleInputPassword1" class="label form-control-label">City</label>
+                            <input type="text" nbInput fullWidth placeholder="City" [(ngModel)]="getsetObj.city"
+                                #City="ngModel" name="city"
+                                [status]="City.dirty ? (City.invalid  ? 'danger' : 'success') : City.touched ? 'danger' : 'basic' "
+                                required pattern="[a-zA-Z\s]*$">
+                            <ng-container *ngIf="!City?.valid && (City.touched || City?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="City.errors?.required">
+                                    City is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="City.errors?.pattern">
+                                    Alphabets only
+                                </p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="exampleInputPassword1" class="label form-control-label">State</label>
+                            <input type="text" nbInput fullWidth placeholder="State" [(ngModel)]="getsetObj.state"
+                                #State="ngModel" name="state"
+                                [status]="State.dirty ? (State.invalid  ? 'danger' : 'success') : State.touched ? 'danger' : 'basic' "
+                                required pattern="[a-zA-Z\s]*$">
+                            <ng-container *ngIf="!State?.valid && (State.touched || State?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="State.errors?.required">
+                                    State is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="State.errors?.pattern">
+                                    Alphabets only
+                                </p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="exampleInputPassword1" class="label form-control-label">Country</label>
+                            <input type="text" nbInput fullWidth placeholder="Country" [(ngModel)]="getsetObj.country"
+                                #Country="ngModel" name="country"
+                                [status]="Country.dirty ? (Country.invalid  ? 'danger' : 'success') : Country.touched ? 'danger' : 'basic' "
+                                required pattern="[a-zA-Z\s]*$">
+                            <ng-container *ngIf="!Country?.valid && (Country.touched || Country?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="Country.errors?.required">
+                                    Country is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="Country.errors?.pattern">
+                                    Alphabets only
+                                </p>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="exampleInputPassword1" class="label form-control-label">Postal Code</label>
+                            <input type="text" nbInput fullWidth placeholder="Postal Code" [(ngModel)]="getsetObj.zip"
+                                #postalCode="ngModel" name="postal"
+                                [status]="postalCode.dirty ? (postalCode.invalid  ? 'danger' : 'success') : postalCode.touched ? 'danger' : 'basic' "
+                                required pattern="^[0-9]*$">
+                            <ng-container
+                                *ngIf=" !postalCode?.valid && (postalCode.touched || postalCode?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="postalCode.errors?.required">
+                                    postalCode is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="postalCode.errors?.pattern">
+                                    Numbers only
+                                </p>
+
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="exampleInputPassword1" class="label form-control-label">Contact Number</label>
+                            <input type="text" nbInput fullWidth placeholder="Contact Number"
+                                [(ngModel)]="getsetObj.contactno" #contactNumber="ngModel" name="contact"
+                                [status]="contactNumber.dirty ? (contactNumber.invalid  ? 'danger' : 'success') : contactNumber.touched ? 'danger' : 'basic' "
+                                required pattern="^[0-9]*$">
+                            <ng-container
+                                *ngIf="!contactNumber?.valid && (contactNumber.touched || contactNumber?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="contactNumber.errors?.required">
+                                    Contact Number is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="contactNumber.errors?.pattern">
+                                    Numbers only
+                                </p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="exampleInputPassword1" class="label form-control-label">Copy Rights</label>
+                            <input type="text" nbInput fullWidth placeholder="Copy Rights"
+                                [(ngModel)]="getsetObj.copy_right_text" #copyRights="ngModel" name="copyrights"
+                                [status]="copyRights.dirty ? (copyRights.invalid  ? 'danger' : 'success') : copyRights.touched ? 'danger' : 'basic' "
+                                required>
+                            <ng-container
+                                *ngIf="!copyRights?.valid && (copyRights.touched || copyRights?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="copyRights.errors?.required">
+                                    CopyRights is required!
+                                </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="exampleInputEmail1" class="label form-control-label">Footer Content</label>
+                            <input type="text" nbInput fullWidth placeholder="Footer Content" name="footer"
+                                [(ngModel)]="getsetObj.footer" #footer="ngModel" minlength="3"
+                                 required
+                                [status]="footer.dirty ? (footer.invalid  ? 'danger' : 'success') : footer.touched ? 'danger' : 'basic' ">
+                            <ng-container *ngIf="!footer?.valid && (footer.touched || footer?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="footer.errors?.required">
+                                    Footer Content is required!
+                                </p>
+                            </ng-container>
+                        </div>
+                    </div> -->
+
+
+                    <div class="row">
+                        <div class="col-md-12 mt-3 mb-3">
+                            <h5 class="form-control-label">Social Links</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1" class="label form-control-label">FaceBook</label>
+                            <input type="url" nbInput fullWidth placeholder="FaceBook URL"
+                                [(ngModel)]="getsetObj.facebooklink" #faceBook="ngModel" name="facebook"
+                                [status]="faceBook.dirty ? (faceBook.invalid  ? 'danger' : 'success') : faceBook.touched ? 'danger' : 'basic' "
+                                required
+                                pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$">
+
+                            <ng-container *ngIf="!faceBook?.valid && (faceBook.touched || faceBook?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="faceBook.errors?.required">
+                                    FaceBook URL is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="faceBook.errors?.pattern">
+                                    Enter Valid URL </p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1" class="label form-control-label">Reddit</label>
+                            <input type="text" nbInput fullWidth placeholder="redditlink URL"
+                                [(ngModel)]="getsetObj.redditlink" #Redditlink="ngModel" name="Reddit"
+                                [status]="Redditlink.dirty ? (Redditlink.invalid  ? 'danger' : 'success') : Redditlink.touched ? 'danger' : 'basic' "
+                                required
+                                pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$">
+                            <ng-container
+                                *ngIf="!Redditlink?.valid && (Redditlink.touched || Redditlink?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="Redditlink.errors?.required">
+                                    Reddit URL is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="Redditlink.errors?.pattern">
+                                    Enter Valid URL </p>
+                            </ng-container>
+                        </div>
+                        <!-- <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1" class="label form-control-label">Telegram</label>
+                            <input type="text" nbInput fullWidth placeholder="Telegram URL"
+                                [(ngModel)]="getsetObj.telegramlink" #Telegram="ngModel" name="telegram"
+                                [status]="Telegram.dirty ? (Telegram.invalid  ? 'danger' : 'success') : Telegram.touched ? 'danger' : 'basic' "
+                                required
+                                pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$">
+                            <ng-container *ngIf="!Telegram?.valid && (Telegram.touched || Telegram?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="Telegram.errors?.required">
+                                    Telegram URL is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="Telegram.errors?.pattern">
+                                    Enter Valid URL </p>
+                            </ng-container>
+                        </div> -->
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1" class="label form-control-label">Twitter</label>
+                            <input type="text" nbInput fullWidth placeholder="Twitter URL"
+                                [(ngModel)]="getsetObj.twitterlink" #Twitter="ngModel" name="twitter"
+                                [status]="Twitter.dirty ? (Twitter.invalid  ? 'danger' : 'success') : Twitter.touched ? 'danger' : 'basic' "
+                                required
+                                pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$">
+                            <ng-container *ngIf="!Twitter?.valid && (Twitter.touched || Twitter?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="Twitter.errors?.required">
+                                    Twitter URL is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="Twitter.errors?.pattern">
+                                    Enter Valid URL ! </p>
+                            </ng-container>
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1" class="label form-control-label">Instagram</label>
+                            <input type="text" nbInput fullWidth placeholder="Instagram URL"
+                                [(ngModel)]="getsetObj.instagramlink" #instagramlink="ngModel" name="Skype"
+                                [status]="instagramlink.dirty ? (instagramlink.invalid  ? 'danger' : 'success') : instagramlink.touched ? 'danger' : 'basic' "
+                                required
+                                pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$">
+                            <ng-container
+                                *ngIf="!instagramlink?.valid && (instagramlink.touched || instagramlink?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="instagramlink.errors?.required">
+                                    Instagram URL is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="instagramlink.errors?.pattern">
+                                    Enter Valid URL </p>
+                            </ng-container>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <h5 class="form-control-label">Site Mode Setting</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="exampleInputPassword1" class="label form-control-label">Site Mode</label>
+                            <div class="">
+                                <nb-select fullWidth placeholder="Select mode" [(ngModel)]="getsetObj.site_mode"
+                                    #siteMode="ngModel" name="sitemode"
+                                    [status]="siteMode.dirty ? (siteMode.invalid  ? 'danger' : 'success') : siteMode.touched ? 'danger' : 'basic' "
+                                    required>
+                                    <nb-option [value]="true">Live</nb-option>
+                                    <nb-option [value]="false">Under Maintance</nb-option>
+                                </nb-select>
+                                <ng-container
+                                    *ngIf="!siteMode?.valid && (siteMode.touched || siteMode?.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="siteMode.errors?.required">
+                                        Site Mode is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="exampleInputPassword1" class="label form-control-label">Site KYC</label>
+                            <div class="">
+                                <nb-select fullWidth placeholder="Select mode" [(ngModel)]="getsetObj.site_kyc"
+                                    #siteKyc="ngModel" name="sitekyc"
+                                    [status]="siteKyc.dirty ? (siteKyc.invalid  ? 'danger' : 'success') : siteKyc.touched ? 'danger' : 'basic' "
+                                    required>
+                                    <nb-option [value]="true">Enable</nb-option>
+                                    <nb-option [value]="false">Disable</nb-option>
+                                </nb-select>
+                                <ng-container
+                                    *ngIf="!siteKyc?.valid && (siteKyc.touched || siteKyc?.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="siteKyc.errors?.required">
+                                        Site KYC is required!
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-4 pb-4">
+                        <button nbButton class="col-md-2" type="submit" status="primary" [class.btn-pulse]="onSubmit">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

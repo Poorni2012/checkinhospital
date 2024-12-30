@@ -1,0 +1,370 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <div class="d-flex">
+                    <div class="">
+                        Edit Currency Details
+                    </div>
+                    <div class="ml-auto" [routerLink]="['/pages/p2p-token-management/']">
+                        <nb-icon icon="arrow-ios-back-outline" pack="eva"></nb-icon>
+                        <span>Back</span>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <form #currencyEditForm="ngForm" (ngSubmit)="editCurrencyoneDetails(currencyEditForm)">
+                    <div class="row" *ngIf="tokenoneObj.network != 'coin'">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Select Network Type</label>
+                            <div class="">
+                                <nb-select fullWidth placeholder="Select mode" [(ngModel)]="tokenoneObj.network_type"
+                                    #network_type="ngModel" name="network_type" disabled>
+                                    <nb-option value="" selected disabled>Select Network</nb-option>
+                                    <!-- <nb-option value="bep20">BEP20</nb-option> -->
+                                    <nb-option value="erc20">ERC20</nb-option>
+                                    <nb-option value="trc20">TRC20</nb-option>
+                                </nb-select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Contract Address</label>
+                            <input type="text" nbInput fullWidth placeholder="Contract Address" name="address"
+                                [(ngModel)]="tokenoneObj.contract_address" #address="ngModel" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Currency Name</label>
+                            <input type="text" nbInput fullWidth placeholder="Currency Name" name="name"
+                                [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : name.touched ? 'danger' : 'basic' "
+                                [(ngModel)]="tokenoneObj.currency_name" #name="ngModel" required>
+                            <ng-container *ngIf="!name?.valid && (name.touched || name?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="name.errors?.required">
+                                    * Currency Name is required !
+                                </p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1" class="label form-control-label">Currency Symbol</label>
+                            <input type="text" nbInput fullWidth placeholder="Currency Symbol" name="symbol"
+                                [(ngModel)]="tokenoneObj.currency_symbol" #symbol="ngModel" minlength="3"
+                                pattern="[a-zA-Z0-9\s]*$" required
+                                [status]="symbol.dirty ? (symbol.invalid  ? 'danger' : 'success') : symbol.touched ? 'danger' : 'basic' ">
+                            <ng-container *ngIf="!symbol?.valid && (symbol.touched || symbol?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="symbol.errors?.required">
+                                    * Currency Symbol is required !
+                                </p>
+                            </ng-container>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="title" class="label">Currency Digit</label>
+                            <input type="text" nbInput fullWidth id="decimal" placeholder="decimal"
+                                [(ngModel)]="tokenoneObj.decimal" #decimal="ngModel" name="decimal"
+                                [status]="decimal.dirty ? (decimal.invalid  ? 'danger' : 'success') : decimal.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                                [attr.aria-invalid]="decimal.invalid && decimal.touched ? true : null" required>
+                            <ng-container *ngIf="decimal.invalid && ( decimal.touched || decimal.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="decimal.errors?.required">
+                                    * Decimal is required!
+                                </p>
+                            </ng-container>
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <label for="TotalSupply" class="label">Total Supply</label>
+                            <input type="text" nbInput fullWidth id="TotalSupply" placeholder="Total Supply"
+                                [(ngModel)]="tokenoneObj.total_supply" #total_supply="ngModel" name="total_supply"
+                                [status]="total_supply.dirty ? (total_supply.invalid  ? 'danger' : 'success') : total_supply.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                                [attr.aria-invalid]="total_supply.invalid && total_supply.touched ? true : null"
+                                required pattern="^\d+(\.\d+)?$">
+                            <ng-container
+                                *ngIf="total_supply.invalid && ( total_supply.touched || total_supply.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="total_supply.errors?.required">
+                                    * Total Supply is required !
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="total_supply.errors?.pattern">
+                                    * Invalid Total Supply !
+                                </p>
+                            </ng-container>
+
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="sel_fee" class="label form-control-label">Withdraw Fee</label>
+                            <nb-form-field>
+                                <input type="text" nbInput fullWidth placeholder="Withdraw Fee" name="fee"
+                                    [(ngModel)]="tokenoneObj.fee" #fee="ngModel" required pattern="^\d+(\.\d+)?$">
+                                <div type="button" nbSuffix ghost>
+                                    <span>%</span>
+                                </div>
+                            </nb-form-field>
+                            <ng-container *ngIf="!fee?.valid && (fee.touched || fee?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="fee.errors?.required">
+                                    * Withdraw fee is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="fee.errors?.pattern">
+                                    * Invalid Withdraw fee!
+                                </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="exampleInputEmail1" class="label form-control-label">Minimum Deposit</label>
+                            <input type="text" nbInput fullWidth placeholder="Minimum Deposit" name="min_deposit"
+                                [(ngModel)]="tokenoneObj.min_deposit" #min_deposit="ngModel" required
+                                pattern="^\d+(\.\d+)?$">
+                            <ng-container
+                                *ngIf="!min_deposit?.valid && (min_deposit.touched || min_deposit?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="min_deposit.errors?.required">
+                                    *Minimum Deposit is required !
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="min_deposit.errors?.pattern">
+                                    * Invalid Minimum Deposit !
+                                </p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="exampleInputEmail1" class="label form-control-label">Maximum Deposit</label>
+                            <input type="text" nbInput fullWidth placeholder="Maximum Deposit" name="max_deposit"
+                                [(ngModel)]="tokenoneObj.max_deposit" #max_deposit="ngModel" required
+                                pattern="^\d+(\.\d+)?$">
+                            <ng-container
+                                *ngIf="!max_deposit?.valid && (max_deposit.touched || max_deposit?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="max_deposit.errors?.required">
+                                    * Maximum Deposit is required !
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="max_deposit.errors?.pattern">
+                                    * Invalid Maximum Deposit !
+                                </p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="exampleInputEmail1" class="label form-control-label">Minimum Withdraw</label>
+                            <input type="text" nbInput fullWidth placeholder="Minimum Withdraw" name="min_withdraw"
+                                [(ngModel)]="tokenoneObj.min_withdraw" #min_withdraw="ngModel" required
+                                pattern="^\d+(\.\d+)?$">
+                            <ng-container
+                                *ngIf="!min_withdraw?.valid && (min_withdraw.touched || min_withdraw?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="min_withdraw.errors?.required">
+                                    * Minimum Withdraw is required !
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="min_withdraw.errors?.pattern">
+                                    * Invalid Minimum Withdraw !
+                                </p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="exampleInputEmail1" class="label form-control-label">Maximum Withdraw</label>
+                            <input type="text" nbInput fullWidth placeholder="Maximum Withdraw" name="max_withdraw"
+                                [(ngModel)]="tokenoneObj.max_withdraw" #max_withdraw="ngModel" required
+                                pattern="^\d+(\.\d+)?$">
+                            <ng-container
+                                *ngIf="!max_withdraw?.valid && (max_withdraw.touched || max_withdraw?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="max_withdraw.errors?.required">
+                                    * Maximum Withdraw is required !
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="max_withdraw.errors?.pattern">
+                                    * Invalid Maximum Withdraw !
+                                </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="title" class="label">INR Market Price</label>
+                            <input type="text" nbInput fullWidth id="markt_price" placeholder="Market Price"
+                                [(ngModel)]="tokenoneObj.inr_value" #inr_value="ngModel" name="inr_value"
+                                [status]="inr_value.dirty ? (inr_value.invalid  ? 'danger' : 'success') : inr_value.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                                [attr.aria-invalid]="inr_value.invalid && inr_value.touched ? true : null" required
+                                pattern="^\d+(\.\d+)?$">
+                            <ng-container
+                                *ngIf="inr_value.invalid && ( inr_value.touched || inr_value.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="inr_value.errors?.required">
+                                    INR Market Price is required!
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="inr_value.errors?.pattern">
+                                    * Invalid INR Market Price !
+                                </p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="title" class="label">USD Market Price</label>
+                            <input type="text" nbInput fullWidth id="markt_price" placeholder="Market Price"
+                                [(ngModel)]="tokenoneObj.usd_value" #usd_value="ngModel" name="usd_value"
+                                [status]="usd_value.dirty ? (usd_value.invalid  ? 'danger' : 'success') : usd_value.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                                [attr.aria-invalid]="usd_value.invalid && usd_value.touched ? true : null" required
+                                pattern="^\d+(\.\d+)?$">
+                            <ng-container
+                                *ngIf="usd_value.invalid && ( usd_value.touched || usd_value.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="usd_value.errors?.required">
+                                    * USD Market Price is required !
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="usd_value.errors?.pattern">
+                                    * Invalid USD Market Price !
+                                </p>
+                            </ng-container>
+                        </div>
+
+
+
+                        <!-- <div class="form-group col-md-4">
+                            <label for="title" class="label">EURO Market Price</label>
+                            <input type="text" nbInput fullWidth id="markt_price" placeholder="Market Price"
+                                [(ngModel)]="tokenoneObj.euro_value" #euro_value="ngModel" name="euro_value"
+                                [status]="euro_value.dirty ? (euro_value.invalid  ? 'danger' : 'success') : euro_value.touched ? 'danger' : onSubmit ? 'danger' :'basic' "
+                                [attr.aria-invalid]="euro_value.invalid && euro_value.touched ? true : null" required>
+                            <ng-container
+                                *ngIf="euro_value.invalid && ( euro_value.touched || euro_value.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="euro_value.errors?.required">
+                                    EURO Market Price is required!
+                                </p>
+                            </ng-container>
+                        </div> -->
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="label form-control-label">Image ( <span
+                                    class="caption status-danger pt-2">* Image Resolution should be 32 x 32
+                                </span> )</label>
+                            <div class="upload-bg my-2">
+                                <input type="file" class="upload" id="upload-btn-2" nbInput fullWidth                                    
+                                    [(ngModel)]="logoImage" #imageData
+                                    (change)="uploadFile(imageData.files, $event)" name="image"
+                                    accept="image/png, image/jpeg, image/jpg, image/svg+xml"
+                                    [status]="(tokenoneObj.image == undefined || tokenoneObj.image == null || tokenoneObj.image == '') ? 'danger' : 'success' " />
+                                <label class="file-upload-1" for="upload-btn-2">
+                                    <div class="p-2">
+                                        <img src="../../../../assets/images/addicon1.webp" alt="" class="profile-image"
+                                            *ngIf="tokenoneObj.image == undefined || tokenoneObj.image == null || tokenoneObj.image == ''">
+                                        <img class="profile-image"
+                                            [src]="_sanitizer.bypassSecurityTrustResourceUrl(tokenoneObj.image)" alt=""
+                                            *ngIf="tokenoneObj.image != undefined && tokenoneObj.image != null && tokenoneObj.image != ''">
+                                    </div>
+                                </label>
+                            </div>
+                            <ng-container *ngIf="image.invalid && ( image.touched || image.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="image.errors?.required">
+                                    * Currency Image is required ! </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <!-- //Need to ADD -->
+                    <h4>P2P Fee Details</h4>
+                    <div class="row">
+
+                        <div class="form-group col-md-6">
+                            <label for="buy_fe" class="label form-control-label"> Buyer Fee</label>
+                            <nb-form-field>
+                                <input type="text" nbInput fullWidth placeholder=" Buyer Fee" name="p2p_buyer_fee"
+                                    [(ngModel)]="tokenoneObj.p2p_buyer_fee" #p2p_buyer_fee="ngModel" required>
+                                <div type="button" nbSuffix ghost>
+                                    <span>%</span>
+                                </div>
+                            </nb-form-field>
+                            <ng-container
+                                *ngIf="!p2p_buyer_fee?.valid && (p2p_buyer_fee.touched || p2p_buyer_fee?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="p2p_buyer_fee.errors?.required">
+                                    Buyer Fee is required!
+                                </p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="sel_fee" class="label form-control-label">Seller Fee</label>
+                            <nb-form-field>
+                                <input type="text" nbInput fullWidth placeholder="Seller Fee" name="p2p_seller_fee"
+                                    [(ngModel)]="tokenoneObj.p2p_seller_fee" #p2p_seller_fee="ngModel" required>
+                                <div type="button" nbSuffix ghost>
+                                    <span>%</span>
+                                </div>
+                            </nb-form-field>
+                            <ng-container
+                                *ngIf="!p2p_seller_fee?.valid && (p2p_seller_fee.touched || p2p_seller_fee?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="p2p_seller_fee.errors?.required">
+                                    Seller Fee is required!
+                                </p>
+                            </ng-container>
+                        </div>
+
+
+                        <!--  FEE WITH USD RANGE -->
+                        <!-- <div class="form-group col-md-4">
+                            <label for="sel_fee" class="label form-control-label">Fee Type</label>
+                            <div class="">
+                                <nb-select fullWidth placeholder="Select Fee Type" [(ngModel)]="tokenoneObj.fee_type"
+                                    #fee_type="ngModel" name="fee_type" required>
+                                    <nb-option value="" selected disabled>Select Fee Type</nb-option>
+                                    <nb-option value="fixed">Fixed</nb-option>
+                                    <nb-option value="percentage">Percentage</nb-option>
+                                </nb-select>
+                                <ng-container
+                                    *ngIf="!fee_type?.valid && (fee_type.touched || fee_type?.dirty || onSubmit)">
+                                    <p class="caption status-danger pt-2" *ngIf="fee_type.errors?.required">
+                                        * Fee Type is required !
+                                    </p>
+                                </ng-container>
+                            </div>
+                        </div> -->
+                        <!-- <div class="form-group col-md-6">
+                            <label for="sel_fee" class="label form-control-label">Fee Below 100 USD</label>
+                            <nb-form-field>
+                                <input type="text" nbInput fullWidth placeholder="Fee" name="fee_below_usd"
+                                    [(ngModel)]="tokenoneObj.fee_below_usd" #fee_below_usd="ngModel" required
+                                    pattern="^\d+(\.\d+)?$">
+                                <div type="button" nbSuffix ghost>
+                                    <span>$</span>
+                                </div>
+                            </nb-form-field>
+                            <ng-container
+                                *ngIf="!fee_below_usd?.valid && (fee_below_usd.touched || fee_below_usd?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="fee_below_usd.errors?.required">
+                                    * Fee Below USD is required !
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="fee_below_usd.errors?.pattern">
+                                    * Invalid Fee !
+                                </p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="sel_fee" class="label form-control-label">Fee Above 100 USD</label>
+                            <nb-form-field>
+                                <input type="text" nbInput fullWidth placeholder="Fee" name="fee_above_usd"
+                                    [(ngModel)]="tokenoneObj.fee_above_usd" #fee_above_usd="ngModel" required
+                                    pattern="^(([1-9][0-9]?|9[0-9]?)\.\d+|[1-9][0-9]?)$">
+                                <div type="button" nbSuffix ghost>
+                                    <span>%</span>
+                                </div>
+                            </nb-form-field>
+                            <ng-container
+                                *ngIf="!fee_above_usd?.valid && (fee_above_usd.touched || fee_above_usd?.dirty || onSubmit)">
+                                <p class="caption status-danger pt-2" *ngIf="fee_above_usd.errors?.required">
+                                    * Fee Above USD is required !
+                                </p>
+                                <p class="caption status-danger pt-2" *ngIf="fee_above_usd.errors?.pattern">
+                                    * Invalid Fee Percentage !
+                                </p>
+                            </ng-container>
+                        </div> -->
+                    </div>
+
+                    <div class="text-center pt-4 pb-4">
+                        <button class="col-md-2" type="submit" nbButton status="primary"
+                            [disabled]="onDisabled">Submit</button>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
